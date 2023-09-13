@@ -20,7 +20,7 @@ main {
     flex-flow: row wrap;
     justify-content: space-around;
 
-    background-image: url('../SmartPhoneProducts1/images/phone_globe.jpg');
+    background-image: url(images/phone_globe.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover; /* To cover the entire element */
