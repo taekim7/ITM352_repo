@@ -4,35 +4,31 @@ body {
   margin: 0 auto;
 }
 
-.item img {
-  width: 200px;
-  height: 200px;
-}
-
 /* Typography */
 h1, h2 {
   text-align: center;
 }
 
-/* Block styling */
-main {
+/* Block Styling */
+.main {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-
-  background-image: url(../../images/phone_globe.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover; /* To cover the entire element */
+  background: url("images/phone_globe.jpg") no-repeat 50% center;
   color: black;
 }
 
 /* Styling the products display */
-body > div {
-  border: 5px solid black; /* Added a semicolon here */
-  display: flex;
+.item img {
+  width: 200px;
+  height:200px;
 }
 
+/* Div children of body */
+body > div {
+  border: 5px solid black;
+  display: flex;
+}
 .rotate img
 {
 animation: rotation .3s infinite linear;
