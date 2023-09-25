@@ -1,10 +1,12 @@
 //declare and push to the DOM the store name at top and bottom
 const store_name="Tae Kim";
 top_title.innerHTML=(store_name + "'s Used Smart Phone Store");
-bottom_title.innerHTML=(store_name + "'s Used Smart Phone Store");
 
-let hits= 0;
-let spins=0;
+//send store name infor to the footer title
+bottom_title.innerHTML=("Your one stop shop for used phones - "+store_name+"'s");
+
+let hits = 0;
+let spins = 0;
 //let wins;
 let over_half=false;
 hits_span.innerHTML = hits; 

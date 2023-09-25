@@ -31,7 +31,7 @@ body > div {
 }
 .rotate img
 {
-animation: rotation .3s infinite linear;
+animation: rotation 0.3s infinite linear;
 }
 
 @keyframes rotation {
