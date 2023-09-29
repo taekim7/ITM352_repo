@@ -73,3 +73,6 @@ row.insertCell(1).innerHTML = `${quantity5}`;
 row.insertCell(2).innerHTML = '$' + `${price5}`;
 row.insertCell(3).innerHTML = ('$' + `${extended_price5}`);
 
+document.getElementById("subtotal_cell").textContent = '$' + subtotal.toFixed(2);
+document.getElementById("tax_cell").textContent = '$' + tax.toFixed(2);
+document.getElementById("total_cell").textContent = '$' + total.toFixed(2);
