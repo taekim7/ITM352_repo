@@ -30,7 +30,7 @@ document.querySelector('button').addEventListener('click', function () {
             num_days=-1;
             break;
     }
-
+//When the number of days is -1, we will output an error message. If not, send result
     if (num_days === -1) {
         result.textContent = 'Invalid month. Please enter a valid month name.';
     } else {
