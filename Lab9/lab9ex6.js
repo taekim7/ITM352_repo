@@ -63,3 +63,23 @@ function process(picture) {
 
 let url = 'https://www.example.com/big_pic.jpg';
 download(url, process);
+
+
+
+function calculateTax(monthly_sales, tax_rate) {
+    if (typeof tax_rate !== 'number' || tax_rate < 0) {
+        throw new Error('Tax rate must be a non-negative number');
+    }
+
+    // Calculate tax owing for each monthly sale
+    const tax_owing = monthly_sales.map(sale => sale * tax_rate);
+
+    return tax_owing;
+}
+
+// Example usage:
+const monthly_sales = [1000, 2000, 1500, 2500];
+const tax_rate = 0.04; // 4% Hawaii tax rate
+
+const tax_owing = calculateTax(monthly_sales, tax_rate);
+console.log(tax_owing); // This will print the tax owing for each monthly sale
