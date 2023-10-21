@@ -66,6 +66,7 @@ download(url, process);
 
 
 
+//Bonus Task 
 function calculateTax(monthly_sales, tax_rate) {
     if (typeof tax_rate !== 'number' || tax_rate < 0) {
         throw new Error('Tax rate must be a non-negative number');
