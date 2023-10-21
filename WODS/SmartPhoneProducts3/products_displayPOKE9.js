@@ -11,35 +11,48 @@ let over_half=false;
 hits_span.innerHTML = hits; 
 spins_span.innerHTML = spins;
 
-let name1 = "HTC";
-let price1 = 40.00;
-let image1 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg";
+//Product information
+let product1 = {
+name:  "HTC",
+price:  40.00,
+image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg"
+};
 
-let name2 = "Apple";
-let price2 = 75.00;
-let image2 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg";
+let product2 = {
+name:  "Apple",
+price:  75.00,
+image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg"
+};
 
-let name3 = "Nokia";
-let price3 = 35.00;
-let image3 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg";
+let product3 = {
+name:  "Nokia",
+price:  35.00,
+image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg"
+};
 
-let name4 = "Samsung";
-let price4 = 45.00;
-let image4 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg";
+let product4 = {
+name:  "Samsung",
+price:  45.00,
+image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg"
+};
 
-let name5 = "Blackberry";
-let price5 = 10.00;
-let image5 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg";
+let product5 = {
+name:  "Blackberry",
+price:  10.00,
+image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg"
+};
+
+//Array for products
+products = [product1,product2,product3,product4,product5];
 
 
-
-for (let i=1; eval("typeof name"+i) !='undefined'; i++){
+for (i = 0; i < products.length; i++){
     document.querySelector('.main').innerHTML += `
     <section class="item" onmouseover="changeClassName(this);"
     onclick="resetClassName(this);">
-        <h2>${eval("name"+i)}</h2>
-        <p>$${eval("price"+i)}</p>
-        <img src="${eval("image"+i)}" />
+        <h2>${products[i].name}</h2>
+        <p>$${products [i].price}</p>
+        <img src="${products [i].image}" />
     
     </section>`;
 }
