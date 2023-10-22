@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="invoice.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Receipt</title>
+</head>
+<body>
+    <table border="2">
+        <tbody>
+          <thead>
+          <tr>
+            <th style="text-align: center;" width="43%">Item</th>
+            <th style="text-align: center;" width="11%">quantity</th>
+            <th style="text-align: center;" width="13%">price</th>
+            <th style="text-align: center;" width="54%">extended price</th>
+          </tr>
+          </thead>
+          <tbody id="invoiceTable">
+          <!-- Product rows will be added dynamically using JavaScript -->
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="3">Sub-total</td>
+            <td id="subtotal_cell">$0.00</td>
+          </tr>
+          <tr>
+            <td colspan="3">Tax @ 5.75%</td>
+            <td id="tax_cell">$0.00</td>
+          </tr>
+          <tr>
+            <td colspan="3">Total</td>
+            <td id="total_cell">$0.00</td>
+          </tr>
+          </tfoot>
+        </table>
+        <script src="invoice3.js" type="module"></script>
+</body>
+</html>
