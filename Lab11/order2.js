@@ -39,7 +39,7 @@ function validateQuantity(quantity) {
 
 }
 function displayPurchase() {
-    let quantity = document.getElementById('qty_textbox').value;
+    let quantity = Number(document.getElementById('qty_textbox').value);
 
     let validationMessage = validateQuantity(quantity);
     if (validationMessage =="") {
