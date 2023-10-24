@@ -35,5 +35,5 @@ function validateQuantity(quantity) {
             errorMessage = ""; //No errors
             break;
     }
-
+    return errorMessage;
 }
