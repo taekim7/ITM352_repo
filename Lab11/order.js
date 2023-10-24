@@ -22,10 +22,10 @@ function validateQuantity(quantity) {
         case isNaN(quantity):
         errorMessage = "Not a number. Please enter a non-negative quantity to order.";
         break;
-        case quantity < 0 && !Number.isInteger(quantity):
+        case quantity <= 0 && !Number.isInteger(quantity):
         errorMessage = "Negative inventory and not an Integer. Please enter a non-negative quantity to order.";
         break;
-        case quantity < 0:
+        case quantity <= 0:
         errorMessage = "Negative inventory. Please enter a non-negative quantity to order.";
         break;
         case !Number.isInteger(quantity):
