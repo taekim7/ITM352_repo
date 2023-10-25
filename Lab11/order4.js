@@ -8,9 +8,8 @@ function formSubmission() {
     } else {
         window.location.href = `display_purchase.html?qty_textbox=${quantity}`;
     }
-    return false; //Prevents form submission, since we are redirecting
+    return false; //Prevents form submission
 }
-
 
 function validateQuantity(quantity) {
     let errorMessage = "";
