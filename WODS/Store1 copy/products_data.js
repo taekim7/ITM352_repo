@@ -4,28 +4,28 @@ let quantity = [2, "cat", 1.5, -1.5, 0];
 //Defining the item object with brand,price, and quantity attributes
 let itemData = [
     {
-        brand: 'Gillette Sensor 3 Razor',
-        price: 1.23,
+        brand: 'HTC',
+        price: 40,
         quantityIndex: 0,
     },
     {
-        brand: 'Barbasol Shaving Cream',
-        price: 2.64,
+        brand: 'Apple',
+        price: 75,
         quantityIndex: 1,
     },
     {
-        brand: 'Nautica Cologne',
-        price: 6.17,
+        brand: 'Nokia',
+        price: 40,
         quantityIndex: 2,
     },
     {
-        brand: 'Rubbing Alcohol',
-        price: 0.98,
+        brand: 'Samsung',
+        price: 50,
         quantityIndex: 3,
     },
     {
-        brand: 'Colgate Classic Toothbrush',
-        price: 1.89,
+        brand: 'Blackberry',
+        price: 35,
         quantityIndex: 4,
     },
 ];

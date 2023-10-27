@@ -12,7 +12,7 @@ hits_span.innerHTML = hits;
 spins_span.innerHTML = spins;
 
 //Product information
-let product1 = {
+/*let product1 = {
 name:  "HTC",
 price:  40.00,
 image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg"
@@ -41,7 +41,7 @@ name:  "Blackberry",
 price:  10.00,
 image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg"
 };
-
+*/
 //Array for products
 products = [product1,product2,product3,product4,product5];
 

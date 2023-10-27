@@ -28,7 +28,7 @@ document.getElementById('total_cell').innerHTML = `$${total.toFixed(2)}`;
 //Setting subtotal, tax, and total cells
 document.getElementById('subtotal_cell').innerHTML = '$' + subtotal.toFixed(2);
 document.getElementById('tax_cell').innerHTML = '$' + taxAmount.toFixed(2);
-document.getElementByID('shipping_cell').innerHTML = '$' + shippingCharge.toFixed(2);
+document.getElementById('shipping_cell').innerHTML = '$' + shippingCharge.toFixed(2);
 
 //I tried a different method..but it didn't work
 function validateQuantity (quantity) {

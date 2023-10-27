@@ -42,3 +42,27 @@ to {
   transform: rotate(359deg);
 }
 }
+
+.item {
+  text-align: center;
+}
+.item img {
+  display: block;
+  margin: 0 auto;
+}
+.item input {
+  display: block;
+  margin: 0 auto;
+}
+
+.button {
+  display: inline-block;
+  padding: 20px 40px; /* Adjust the padding for button size */
+  background-color: #7EB9D8; /* Light blue background color */
+  color: #fff; /* Button text color */
+  text-decoration: none; /* Remove underline */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  margin-left: 350px;
+
+}
