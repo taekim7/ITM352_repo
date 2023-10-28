@@ -1,5 +1,5 @@
 //Defining quantity array
-let quantity = [2, "cat", 1.5, -1.5, 0];
+let quantity = [0,1,2,3,4];
 
 //Defining the item object with brand,price, and quantity attributes
 let itemData = [
