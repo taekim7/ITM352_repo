@@ -1,6 +1,7 @@
 //Defining quantity array
 let quantity = [0,1,2,3,4];
 
+
 //Defining the item object with brand,price, and quantity attributes
 let itemData = [
     {
