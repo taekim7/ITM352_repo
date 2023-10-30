@@ -1,5 +1,16 @@
 //Product Data
-import { itemData, quantity } from './products_data.js';
+const params = (new URL (document.location)).searchParams;
+
+let quantity = [];
+
+for (let i = 0; i < itemData.length; i++) {
+  let quantityValue = params.get(`quantity${i}`);
+  if (quantityValue !== null){
+    quantity [itemData[i].quantityIndex] = Number (quantityValue);
+  }
+}
+
+import { itemData } from './products_data.js';
 
 //Variables for subtotal, tax, shipping charge, and total
 let subtotal = 0;
