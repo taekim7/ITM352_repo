@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Smartphone Products</title>
     <p style="text-align: center; font-weight: bold;">
@@ -8,73 +9,22 @@
         You win: <span id="win_span">pending...</span>
     </p>
     <link rel="stylesheet" type="text/css" href="products-style2.css">
-    
 </head>
 <body>
-    <form action = "invoice3.html" method = "GET"></form>
-    <h1><span id="top_title">Tae Kim's Used Smart Phone Store</span></h1>
-    <div>
-        <main class="main">
-            <section class="item" onmouseover="changeClassName(this);" onclick="resetClassName(this);">
-                <h2>HTC</h2>
-                <p>$40.00</p>
-                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg" />
-                <label for="quantity0_label">Quantity Desired:</label>
-                <input type="text" id="quantity0" name="quantity0">
-            </section>
-            <section class="item" onmouseover="changeClassName(this);" onclick="resetClassName(this);">
-                <h2>Apple</h2>
-                <p>$75.00</p>
-                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg" />
-                <label for="quantity1_label">Quantity Desired:</label>
-                <input type="text" id="quantity1" name="quantity1">
-            </section>
-            <section class="item" onmouseover="changeClassName(this);" onclick="resetClassName(this);">
-                <h2>Nokia</h2>
-                <p>$35.00</p>
-                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg" />
-                <label for="quantity2_label">Quantity Desired:</label>
-                <input type="text" id="quantity2" name="quantity2">
-            </section>
-            <section class="item" onmouseover="changeClassName(this);" onclick="resetClassName(this);">
-                <h2>Samsung</h2>
-                <p>$45.00</p>
-                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg" />
-                <label for="quantity3_label">Quantity Desired:</label>
-                <input type="text" id="quantity3" name="quantity3">
-            </section>
-            <section class="item" onmouseover="changeClassName(this);" onclick="resetClassName(this);">
-                <h2>Blackberry</h2>
-                <p>$10.00</p>
-                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg" />
-                <label for="quantity4_label">Quantity Desired:</label>
-                <input type="text" id="quantity4" name="quantity4">
-            </section>
-        </main>
-    </div>
-    <script>
-        // Function to generate the purchase link with quantity parameters
-        function purchase() {
-            let quantities = [];
-            for (let i = 0; i < 5; i++) {
-                let input = document.getElementById(`quantity${i}`);
-                quantities.push(input.value);
-            }
-            let params = new URLSearchParams();
-            quantities.forEach((quantity, index) => {
-                params.append(`quantity${index}`, quantity);
-            });
-            let purchaseLink = document.querySelector('a.button');
-            purchaseLink.href = `invoice.html?${params.toString()}`;
-        }
-    </script>
+    <form action="./invoice3.html" method="GET">
+        <h1><span id="top_title">Tae Kim's Used Smart Phone Store</span></h1>
+        <div>
+            <main class="main"> 
+            </main>
+        </div>
+    
 </body>
+<footer>
+    <input type = "submit" value = "Purchase" class = "purchase-btn">
+</footer>
+</form>
 <footer>
     <h1><span id="bottom_title"></span></h1>
 </footer>
-<a class="button" href= "invoice3.html" onclick="purchase()">Purchase</a>
 <script src="products_display.js"></script>
 </html>
-
-
-

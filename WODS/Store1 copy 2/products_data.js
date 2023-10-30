@@ -1,7 +1,7 @@
-// Defining quantity array
-let quantities = [2, "cat", 1.5, -1.5, 0];
+//Defining quantity array
+let quantity = [2, "cat", 1.5, -1.5, 0];
 
-// Defining the item object with brand, price, and quantity attributes
+//Defining the item object with brand,price, and quantity attributes
 let itemData = [
     {
         brand: 'HTC',
@@ -30,4 +30,4 @@ let itemData = [
     },
 ];
 
-export { itemData, quantities };
+export { itemData, quantity };

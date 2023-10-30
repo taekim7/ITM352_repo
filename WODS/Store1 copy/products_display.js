@@ -1,8 +1,10 @@
+//Products_display.js
 //declare and push to the DOM the store name at top and bottom
 const store_name="Tae Kim";
 top_title.innerHTML=(store_name + "'s Used Smart Phone Store");
 //send store name infor to the footer title
 bottom_title.innerHTML=("Your one stop shop for used phones - "+store_name+"'s");
+
 
 let hits = 0;
 let spins = 0;
@@ -12,7 +14,7 @@ hits_span.innerHTML = hits;
 spins_span.innerHTML = spins;
 
 //Product information
-/*let product1 = {
+let product1 = {
 name:  "HTC",
 price:  40.00,
 image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg"
@@ -26,26 +28,42 @@ image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jp
 
 let product3 = {
 name:  "Nokia",
-price:  35.00,
+price:  40.00,
 image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg"
 };
 
 let product4 = {
 name:  "Samsung",
-price:  45.00,
+price:  50.00,
 image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg"
 };
 
 let product5 = {
 name:  "Blackberry",
-price:  10.00,
+price:  35.00,
 image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg"
 };
-*/
+
+
 //Array for products
-products = [product1,product2,product3,product4,product5];
+let products = [product1, product2, product3, product4, product5];
 
 
+for (let i = 0; i < products.length; i++) {
+    let product = products[i];
+    document.querySelector('.main').innerHTML += `
+        <section class="item" onmouseover="changeClassName(this);"
+        onclick="resetClassName(this);">
+            <h2>${product.name}</h2>
+            <p>$${product.price}</p>
+            <img src="${product.image}" />
+            <label id="quantity${i}_label" for="quantity${i}"> Quantity Desired: </label>
+            <input type="text" name="quantity${i}" id="quantity${i}" >
+        </section>`;
+}
+
+
+/*
 for (i = 0; i < products.length; i++){
     document.querySelector('.main').innerHTML += `
     <section class="item" onmouseover="changeClassName(this);"
@@ -53,19 +71,11 @@ for (i = 0; i < products.length; i++){
         <h2>${products[i].name}</h2>
         <p>$${products [i].price}</p>
         <img src="${products [i].image}" />
-    
-    </section>`;
+        <label for="quantity$[i]_label">Quantity Desired: </label>
+        <input type="text" id="quantity${i}" name="quantity${i}" oninput = "updateQuantities(${i}, this.value);">
+    `;
 }
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 function changeClassName(element) {
@@ -188,21 +198,4 @@ if (hits_spins_ratio >= 0.5 && hits < spins) {
     progress = 'Get going!';
 }
 win_span.innerHTML = progress;
-}
-
-
-
-//Chat GPT added function
-function purchase() {
-    const quantities = {};
-    for (let i = 0; i < products.length; i++) {
-        const quantityInput = document.getElementById(`quantity${i}`);
-        quantities[`quantity${i}`] = quantityInput.value;
-    }
-
-    // Convert quantities to a JSON string and store it in localStorage
-    localStorage.setItem('productQuantities', JSON.stringify(quantities));
-
-    // Redirect to the invoice page
-    window.location.href = 'invoice3.html';
 }

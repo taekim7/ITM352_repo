@@ -42,21 +42,3 @@ to {
   transform: rotate(359deg);
 }
 }
-
-.item {
-  display: inline-block;
-  width: 25%;
-  margin: 1%;
-  vertical-align: top;
-}
-
-.purchase-btn {
-  display: inline-block;
-  padding: 20px 40px; /* Adjust the padding for button size */
-  background-color: #109ce7; /* Light blue background color */
-  color: #fff; /* Button text color */
-  text-decoration: none; /* Remove underline */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Rounded corners */
-  margin-left: 350px;
-}

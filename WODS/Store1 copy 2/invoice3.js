@@ -1,21 +1,5 @@
-//Invoice3 JavaScript
-
-const params = (new URL(document.location)).searchParams;
-
-let quantity=[];
-
-for (let i = 0; i < itemData.length; i++) {
-  let quantityValue = params.get(`quantity${i}`);
-  if (quantityValue !== null){
-    quantity [itemData[i].quantityIndex] = Number (quantityValue);
-  }
-}
-
-
-//import
 //Product Data
-import { itemData } from './products_data.js';
-
+import { itemData, quantity } from './products_data.js';
 
 //Variables for subtotal, tax, shipping charge, and total
 let subtotal = 0;
@@ -94,5 +78,3 @@ function generateItemRows() {
       document.getElementById('total_cell').innerHTML = '$' + total.toFixed(2);
     }
   }
-
-  
