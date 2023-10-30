@@ -189,3 +189,20 @@ if (hits_spins_ratio >= 0.5 && hits < spins) {
 }
 win_span.innerHTML = progress;
 }
+
+
+
+//Chat GPT added function
+function purchase() {
+    const quantities = {};
+    for (let i = 0; i < products.length; i++) {
+        const quantityInput = document.getElementById(`quantity${i}`);
+        quantities[`quantity${i}`] = quantityInput.value;
+    }
+
+    // Convert quantities to a JSON string and store it in localStorage
+    localStorage.setItem('productQuantities', JSON.stringify(quantities));
+
+    // Redirect to the invoice page
+    window.location.href = 'invoice3.html';
+}

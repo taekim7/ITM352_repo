@@ -78,3 +78,21 @@ function generateItemRows() {
       document.getElementById('total_cell').innerHTML = '$' + total.toFixed(2);
     }
   }
+
+
+  //chatgpt added
+  const savedQuantities = localStorage.getItem('productQuantities');
+if (savedQuantities) {
+    const quantities = JSON.parse(savedQuantities);
+
+    // Update quantity inputs in the invoice table
+    for (let i = 0; i < itemData.length; i++) {
+        const quantityInput = document.getElementById(`quantity${i}`);
+        if (quantities[`quantity${i}`]) {
+            quantityInput.value = quantities[`quantity${i}`];
+        }
+    }
+
+    // Call the function to update the invoice
+    generateItemRows();
+}
