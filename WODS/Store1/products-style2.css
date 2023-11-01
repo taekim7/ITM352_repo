@@ -42,3 +42,21 @@ to {
   transform: rotate(359deg);
 }
 }
+
+.item {
+  display: inline-block;
+  width: 25%;
+  margin: 1%;
+  vertical-align: top;
+}
+
+.purchase-btn {
+  display: inline-block;
+  padding: 20px 40px;
+  background-color: skyblue;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  margin-left: 350px;
+}

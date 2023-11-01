@@ -43,29 +43,21 @@ image:  "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jp
 };
 
 //Array for products
-products = [product1,product2,product3,product4,product5];
+let products = [product1,product2,product3,product4,product5];
 
 
 for (i = 0; i < products.length; i++){
+    let product = products[i];
     document.querySelector('.main').innerHTML += `
     <section class="item" onmouseover="changeClassName(this);"
     onclick="resetClassName(this);">
-        <h2>${products[i].name}</h2>
-        <p>$${products [i].price}</p>
-        <img src="${products [i].image}" />
-    
+        <h2>${product.name}</h2>
+        <p>$${product.price}</p>
+        <img src="${product.image}" />
+        <label id = "quantity${i}_label" for = quantity${i}"> Quantity Desired: </label>
+        <input type = "text" name = "quantity${i}" id = "quantity${i}">
     </section>`;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 function changeClassName(element) {

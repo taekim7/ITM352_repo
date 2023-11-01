@@ -1,0 +1,37 @@
+<!-- order.html for Lab 12 - starter file-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Page</title>
+    <script src = "./products.js"></script>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        let q = Number(params.get('quantity'));
+        let error = params.get('error');
+
+        if (error) {
+            alert(error);
+        }
+        </script>
+</head>
+<body>
+    <script>
+    document.write(`<h3>${products[0]["brand"]} at \$${products[0]["price"]}</h3>`);
+    </script>
+    
+    <form name="qty_form" action="process_form" method="POST">
+        <script>
+            for (i in products) {
+        document.write(`<h4>${products[i]["total_sold"]} ${products[i]["brand"]} 
+            have been sold!</h4>`);
+    }
+        </script>
+        <label for="qty_textbox">Quantity Desired:</label>
+        <input type="text" name="qty_textbox">
+        <span id="qty_textbox_message">Enter a quantity</span>
+
+        <br><br>
+        <input type="submit" value="Purchase">
+    </form>
+</body>
+</html>
