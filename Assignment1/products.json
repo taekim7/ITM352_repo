@@ -2,31 +2,32 @@
     {
       "name": "Air Jordan 1 Bred",
       "price": 400.00,
-      "quantityIndex": 0
+      "image": "./images/bred1",
+      "quantity_available": 10
     },
     {
       "name": "Air Jordan 4 White Cement",
       "price": 350.00,
-      "quantityIndex": 1 
+      "quantity_available": 10 
     },
     {
       "name": "Air Jordan 5 UNC",
       "price": 300.00,
-      "quantityIndex": 2
+      "quantity_available": 10
     },
     {
       "name": "Air Jordan 6 Infrared",
       "price": 240.00,
-      "quantityIndex": 3
+      "quantity_available": 10
     },
     {
       "name": "Air Jordan 11 Concord",
       "price": 280.00,
-      "quantityIndex": 4
+      "quantity_available": 10
     },
     {
       "name": "Air Jordan 12 Flu Game",
       "price": 320.00,
-      "quantityIndex": 5
+      "quantity_available": 10
     }
   ]

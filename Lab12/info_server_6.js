@@ -23,11 +23,13 @@ app.get("/products.js", function (request, response, next) {
 app.use(express.urlencoded({ extended: true }));
 
 //Posting the form data
-app.post("/process_form", function (request, response) {
+/*app.post("/process_form", function (request, response) {
     let receipt = '';
-    let qtys = request.body[`quantity_textbox`];
-    console.log(qtys);
-    for (let i in qtys) {
+    //let qtys = Number(request.body[`quantity_textbox${i}`]);
+    //console.log(qtys);
+    //for (let i in qtys) {
+        for (let i in products) {
+        let qtys = request.body[`quantity_textbox${i}`];
         let q = Number(qtys[i]);
         console.log("the quantity value is " +q);
         let validationMessage = validateQuantity(q);
@@ -42,8 +44,26 @@ app.post("/process_form", function (request, response) {
     }
     response.send(receipt);
     response.end();
-    });
-
+*/
+app.post("/process_form", function (request, response) {
+    let receipt = '';
+    for (let i in products) {
+        let qtys = Number(request.body[`quantity_textbox${i}`]); // Convert to a number here
+        let q = qtys; // No need for q = Number(qtys[i])
+        console.log("the quantity value is " + q);
+        let validationMessage = validateQuantity(q);
+        let brand = products[i]['brand'];
+        let brand_price = products[i]['price'];
+        if (validateQuantity(q) === "") {
+            products[i]['total_sold'] += q; // Use 'q' here
+            receipt += `<h3>Thank you for purchasing: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`;
+        } else {
+            receipt += `<h3><font color="red">${q} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
+        }
+    }
+    response.send(receipt);
+    response.end();
+});
 
 
 app.all('*', function (request, response, next) {
