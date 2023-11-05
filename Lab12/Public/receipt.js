@@ -1,7 +1,5 @@
 //receipt.js
 
-
-
 let params = (new URL(document.location)).searchParams;
 let q = Number(params.get('quantity'));
 
@@ -18,18 +16,27 @@ if (validationMessage === "") {
     document.getElementById('receiptContent').innerHTML = (validationMessage + '<br>' + `Error: ${q} is not a quantity. Hit the back button to fix.`);
 }
 
-function validateQuantity (quantity) {
-        let errorMessage = "";
 
-        if (isNaN(quantity)) {
-            return "Not a number";
-        }else if (quantity < 0 && !Number.isInteger(quantity)) {
-            return "Negative Inventory and not an integer";
-        }else if (quantity <0){
-            return "Negative Inventory";
-        }else if (!Number.isInteger(quantity)){
-            return "not an integer";
-        }else {
-            return "";
-        }
+function validateQuantity (quantity) {
+    let errorMessage = "";
+
+    switch (true) {
+        case isNaN(quantity):
+            errorMessage = "Not a number. Please enter a non-negative quantity to order.";
+            break;
+        case quantity <= 0 && !Number.isInteger(quantity):
+            errorMessage = "Negative inventory and not an Integer. Please enter a non-negative quantity to order.";
+            break;
+        case quantity <= 0:
+            errorMessage = "Negative inventory. Please enter a non-negative quantity to order.";
+            break;
+        case !Number.isInteger(quantity):
+            errorMessage = "Not an Integer. Please enter a non-negative quantity to order.";
+            break;
+        default:
+            errorMessage = ""; //No errors
+            break;
+    }
+
+    return errorMessage;
 }
