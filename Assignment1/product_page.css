@@ -4,3 +4,15 @@ body {
     font-family: 'Quicksand', sans-serif;
     background: #333;
 }
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
+    gap: 20px; /* Add spacing between product cards */
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}

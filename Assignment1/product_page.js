@@ -1,4 +1,109 @@
-let products = [
+//product_page.js
+// Fetch products from the server and populate the product list
+function displayProducts() {
+  fetch('products.json')
+      .then(response => response.json())
+      .then(products => {
+          const productList = document.getElementById('product-list');
+          
+          products.forEach(product => {
+              const productCard = document.createElement('div');
+              productCard.innerHTML = `
+                  <h2>${product.name}</h2>
+                  <p>Price: $${product.price}</p>
+                  <p>Quantity Available: ${product.quantity_available}</p>
+                  <img src="${product.image}" alt="${product.name}">
+                  <button data-product='${JSON.stringify(product)}' onclick='addToCart(this)'>Add to Cart</button>
+              `;
+              productList.appendChild(productCard);
+          });
+      })
+      .catch(error => {
+          console.error('Error fetching product data: ', error);
+      });
+}
+// Function to fetch and display products from the server
+/*fetch('/api/products')
+  .then(response => response.json())
+  .then(products => {
+    const productList = document.getElementById('product-list');
+    
+    products.forEach(product => {
+      const productCard = document.createElement('div');
+      productCard.innerHTML = `
+        <h2>${product.name}</h2>
+        <p>Price: $${product.price}</p>
+        <p>Quantity Available: ${product.quantity_available}</p>
+        <img src="${product.image}" alt="${product.name}">
+        <button data-product='${JSON.stringify(product)}' onclick='addToCart(this)'>Add to Cart</button>
+      `;
+      productList.appendChild(productCard);
+    });
+  });
+*/
+// Function to add a product to the cart
+function addToCart(button) {
+  const product = JSON.parse(button.getAttribute('data-product'));
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  if (product.quantity_available > 0) {
+    cart.push(product);
+    product.quantity_available--;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount(cart.length);
+  } else {
+    alert('Product is out of stock.');
+  }
+}
+
+// Function to update the cart count
+function updateCartCount(count) {
+  const cartCount = document.getElementById('cart-count');
+  cartCount.innerHTML = count;
+}
+//function to display products when page loads
+document.addEventListener('DOMContentLoaded', displayProducts);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*let products = [
     {
         name: "Air Jordan 1 Bred",
         price: 400.00,
@@ -83,3 +188,4 @@ function changeClassName(element) {
 function resetClassName(element) {
     element.classList.remove("highlighted");
 }
+*/

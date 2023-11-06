@@ -1,8 +1,8 @@
 // Importing the Express.js framework 
-const express = require('express');
+let express = require('express');
 // Create an instance of the Express application called "app"
 // app will be used to define routes, handle requests, etc
-const app = express();
+let app = express();
 
 
 
@@ -14,7 +14,11 @@ app.all('*', function (request, response, next) {
 
 // Route all other GET requests to serve static files from a directory named "public"
 app.use(express.static(__dirname + '/public'));
-
+app.get('/api/products', (req, res) => {
+   //read product from products.json
+   let products = require('./products.json');
+   res.json(products);
+});
 // Start the server; listen on port 8080 for incoming HTTP requests
 app.listen(8080, () => console.log(`listening on port 8080`));
 
