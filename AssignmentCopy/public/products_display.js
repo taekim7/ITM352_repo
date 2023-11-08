@@ -28,43 +28,43 @@ bottom_title.innerHTML=("Wear History. It's cool.");
 let products = [
   {
     "name": "Jordan 1 OG BRED",
-    "image": "../images/bred1.webp",
+    "image": "./images/bred1.webp",
     "price": 400.0,
     "quantity": 10
   },
   {
     "name": "Jordan 4 White Cement",
-    "image": "../images/cement4.jpg",
+    "image": "./images/cement4.jpg",
     "price": 350.0,
     "quantity": 10
   },
   {
     "name": "Jordan 5 UNC",
-    "image": "../images/unc5.jpg",
+    "image": "./images/unc5.jpg",
     "price": 300.0,
     "quantity": 10
   },
   {
     "name": "Jordan 6 Infrared",
-    "image": "../images/infrared6.webp",
+    "image": "./images/infrared6.webp",
     "price": 240.0,
     "quantity": 10
   },
   {
     "name": "Jordan 11 Concord",
-    "image": "../images/concord11.webp",
+    "image": "./images/concord11.webp",
     "price": 280.0,
     "quantity": 10
   },
   {
     "name": "Jordan 12 Flu Game",
-    "image": "../images/flugame12.jpg",
+    "image": "./images/flugame12.jpg",
     "price": 320.0,
     "quantity": 10
   }
 ];
 
-
+/*
 for (i = 0; i < products.length; i++){
     document.querySelector('.main').innerHTML += `
     <section class="item" onmouseover="changeClassName(this);"
@@ -75,7 +75,7 @@ for (i = 0; i < products.length; i++){
     
     </section>`;
 }
-
+*/
 
 
 
