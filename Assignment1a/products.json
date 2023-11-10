@@ -1,0 +1,38 @@
+[
+    {
+      "name": "Jordan 1 OG BRED",
+      "price": 400.0,
+      "image": "./public/images/bred1.webp",
+      "qty_available": 10
+    },
+    {
+      "name": "Jordan 4 White Cement",
+      "price": 350.0,
+      "image": "./public/images/cement4.jpg",
+      "qty_available": 10
+    },
+    {
+      "name": "Jordan 5 UNC",
+      "price": 300.0,
+      "image": "./public/images/unc5.jpg",
+      "qty_available": 10
+    },
+    {
+      "name": "Jordan 6 Infrared",
+      "price": 240.0,
+      "image": "./public/images/infrared6.webp",
+      "qty_available": 10
+    },
+    {
+      "name": "Jordan 11 Concord",
+      "price": 280.0,
+      "image": "./public/images/concord11.webp",
+      "qty_available": 10
+    },
+    {
+      "name": "Jordan 12 Flu Game",
+      "price": 320.0,
+      "image": "./public/images/flugame12.jpg",
+      "qty_available": 10
+    }
+  ]
