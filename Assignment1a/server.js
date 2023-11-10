@@ -76,24 +76,6 @@ app.post("/process_form", function (request, response) {
     // response.redirect(`/receipt.html?receipt=${encodeURIComponent(receipt)}`);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 //Process form
 app.post("/process_form", function (request, response) {

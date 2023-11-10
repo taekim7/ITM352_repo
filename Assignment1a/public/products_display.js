@@ -349,3 +349,10 @@ function calculateTotal() {
 
   return total;
 }
+
+
+//autoplay music
+function playAudio() {
+  var audio = document.getElementById("background-music");
+  audio.play();
+}
