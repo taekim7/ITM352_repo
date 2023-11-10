@@ -10,14 +10,19 @@ const app = express();
 // Route all other GET requests to serve static files from a directory named "public"
 app.use(express.static(__dirname + '/public'));
 
+//app.get for test was executed
+app.get('/test', function(req, res){
+	res.send('app.get for test was executed');
+	console.log('app.get for test was executed');
+})
 /* Import data from a JSON file containing information about products
 __dirname represents the directory of the current module (where server.js is located)
 __dirname + "./products.json" specifies the location of products.json
 */
-const products = require(__dirname + './products.json');
+let products = require(__dirname + '/products.json');
 
 // Define a route for handling a GET request to a path that matches "./products.js"
-app.get('./products.js', function(request, response, next) {
+app.get('/products.js', function(request, response, next) {
 	// Send the response as JS
 	response.type('.js');
 	
@@ -29,10 +34,67 @@ app.get('./products.js', function(request, response, next) {
 	response.send(products_str);
 });
 
-//added just now
-app.use(express.urlencoded({ extended: true }));
 
 
+// Monitor all requests regardless of their method (GET, POST, PUT, etc) and their path (URL)
+app.all('*', function (request, response, next) {
+	console.log(request.method + ' to ' + request.path);
+	next();
+ });
+
+
+
+
+ // Start the server; listen on port 8080 for incoming HTTP requests
+app.listen(8080, () => console.log(`listening on port 8080`));
+
+
+// Process form
+app.post("/process_form", function (request, response) {
+    let receipt = '';
+    
+    // Assuming products is an array of items with a corresponding index
+    for (let i in products) {
+        let qty = Number(request.body[`quantity_textbox${i}`]); // Corrected the variable name to qty
+        console.log("the quantity value is " + qty);
+        let validationMessage = validateQuantity(qty);
+        let brand = products[i]['name'];
+        let brand_price = products[i]['price'];
+        
+        if (validationMessage === "") {
+            products[i]['total_sold'] += qty;
+            receipt += `<h3>Mahalo! Enjoy your: ${qty} ${brand}. Your total is \$${qty * brand_price}!</h3>`;
+        } else {
+            receipt += `<h3><font color="red">${qty} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
+        }
+    }
+    
+    // Redirect to the receipt page
+    response.redirect('/receipt.html');
+
+    // If you want to pass data to the receipt page, you can use query parameters
+    // response.redirect(`/receipt.html?receipt=${encodeURIComponent(receipt)}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 //Process form
 app.post("/process_form", function (request, response) {
     let receipt = '';
@@ -45,23 +107,16 @@ app.post("/process_form", function (request, response) {
         let brand_price = products[i]['price'];
         if (validateQuantity(q) === "") {
             products[i]['total_sold'] += q; // Use 'q' here
-            receipt += `<h3>Thank you for purchasing: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`;
+            receipt += `<h3>Mahalo! Enjoy your: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`;
         } else {
             receipt += `<h3><font color="red">${q} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
         }
     }
-    response.send(receipt);
-    response.end();
+	//redirect to receipt page (chatgpt)
+    response.redirect('./public/receipt.html');
 });
+*/
 
-// Monitor all requests regardless of their method (GET, POST, PUT, etc) and their path (URL)
-app.all('*', function (request, response, next) {
-	console.log(request.method + ' to ' + request.path);
-	next();
- });
-
- // Start the server; listen on port 8080 for incoming HTTP requests
-app.listen(8080, () => console.log(`listening on port 8080`));
 
 //Validating Quantity
 function validateQuantity (quantity) {
@@ -87,25 +142,3 @@ function validateQuantity (quantity) {
   
 	return errorMessage;
   }
-
-let params = (new URL(document.location)).searchParams;
-let q = Number(params.get('quantity'));
-let error = params.get('error');
-//if error, alert user
-if (error) {
-	alert(error);
-	}
-  // Loop through the products and generate the HTML for each product
-  const form = document.getElementById('productForm');
-let formHTML = ''; //blank content of form to add to it
-
-//write a loop to print product information and then add quantity text input box for every element of the product array
-for (let i in products) {
-	formHTML += `img src = "${products[i]["image"]}">`;
-    formHTML += `<h3>${products[i]["name"]} at \$${products[i]["price"]} (${products[i]["total_sold"]} sold)</h3>`;
-    formHTML += `<label for="qty_textbox${i}">Quantity Desired:</label>
-    <input type = "text" name = "quantity_textbox${i}" name = "quantity_textbox[${i}]" onkeyup = "checkQuantityTextbox(this);">
-    <span id = "quantity_textbox[${i}]_message">Enter a quantity</span><br>
-`;
-}
-form.innerHTML = formHTML;

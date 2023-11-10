@@ -35,7 +35,7 @@
   input[type="submit"]{
     font-size: 40px; 
     display: inline-block;
-    padding: 20px 40px;
+    padding: 5px 10px;
     background-color: skyblue;
     color: #fff;
     text-decoration: none;
@@ -43,6 +43,7 @@
     border-radius: 5px;
     cursor: pointer; /* Show a pointer cursor on hover */
     position: absolute;
+    top: 65%;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -71,11 +72,11 @@
     object-fit: cover; /* This property ensures the image fits within the specified dimensions and maintains its aspect ratio */
 }
 
-.grid-container {
+#product-display-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
-    gap: 20px; /* Adjust the gap between grid items as needed */
-  }
+    gap: 10px; /* Adjust the gap between grid items as needed */
+}
 
   .main {
     display: grid;
@@ -114,7 +115,7 @@
 
   p {
     font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
-    font-size: 25px; /* Change the font size as needed */
+    font-size: 40px; /* Change the font size as needed */
     text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -122,3 +123,41 @@
     font-weight: bold;
     font-style:initial;
   }
+
+  #cart-icon{
+    position:fixed;
+    top: 20px;
+    right:20px;
+    cursor: pointer;
+  }
+
+  #cart-icon img{
+    width: 40px;
+  }
+
+  #cart-quantity {
+    background-color: black;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 50%;
+    font-size: 10px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+
+  #cart-container {
+    display: none;
+    position: fixed;
+    top: 60px; /* Adjust as needed */
+    right: -100px; /* Initially hide it off the right side */
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease; /* Transition for sliding effect */
+}
+
+.cart-container-visible {
+    right: 20px; /* Show it by moving to the right */
+}
