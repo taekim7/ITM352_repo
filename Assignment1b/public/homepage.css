@@ -1,0 +1,41 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, black 0%, black 50%, red 50%, red 100%);
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+img {
+    max-width: 50%;
+    height: auto;
+}
+
+h1 {
+    font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 50px; /* Change the font size as needed */
+}
+
+h2 {
+    font-family: 'Quicksand', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 20px; /* Change the font size as needed */
+}
+
+h3 {
+    font-family: 'Quicksand', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 15px; /* Change the font size as needed */
+}

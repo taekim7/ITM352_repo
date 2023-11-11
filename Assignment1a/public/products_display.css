@@ -22,6 +22,10 @@
     color: black
   }
 
+ 
+  .quantity {
+    color: black;
+  }
   .footer {
     text-align: center;
     position: fixed;
@@ -115,13 +119,15 @@
 
   p {
     font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
-    font-size: 40px; /* Change the font size as needed */
+    font-size: 20px; /* Change the font size as needed */
     text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
-    color: white;
+    color: black;
     font-weight: bold;
     font-style:initial;
+    top: 50px;
+    bottom: 50%;
   }
 
   #cart-icon{
@@ -140,7 +146,7 @@
     color: white;
     padding: 5px 8px;
     border-radius: 50%;
-    font-size: 10px;
+    font-size: 13px;
     position: absolute;
     top: -5px;
     right: -5px;
@@ -150,14 +156,54 @@
     display: none;
     position: fixed;
     top: 60px; /* Adjust as needed */
-    right: -100px; /* Initially hide it off the right side */
+    right: 0px; /* Initially hide it off the right side */
     padding: 10px;
     border: 1px solid #ccc;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: right 0.3s ease; /* Transition for sliding effect */
+    transition: right 6s ease; /* Transition for sliding effect */
+
 }
 
 .cart-container-visible {
-    right: 20px; /* Show it by moving to the right */
+    right: 50px; /* Show it by moving to the right */
+}
+
+#cart-container.show{
+  right:0;
+}
+
+#cart-container:hover {
+  background-color: #f0f0f0; /* Adjust the background color as desired */
+}
+
+.cart-item-content {
+  display:flex;
+  align-items: center;
+}
+
+.cart-item-image {
+  max-width: 50px;
+  margin-right: 10px;
+}
+
+.cart-item-content div{
+  flex-grow: 1;
+}
+
+.cart-item-content p:first-child {
+  font-size:15px;
+  margin:0;
+}
+
+.cart-item-content p.quantity,
+.cart-item-content p.subtotal {
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+#overall-subtotal {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
 }

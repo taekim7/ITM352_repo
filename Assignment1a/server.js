@@ -51,7 +51,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 
 // Process form
 app.post("/process_form", function (request, response) {
-    let receipt = '';
+    let invoice = '';
     
     // Assuming products is an array of items with a corresponding index
     for (let i in products) {
@@ -63,23 +63,30 @@ app.post("/process_form", function (request, response) {
         
         if (validationMessage === "") {
             products[i]['total_sold'] += qty;
-            receipt += `<h3>Mahalo! Enjoy your: ${qty} ${brand}. Your total is \$${qty * brand_price}!</h3>`;
+            invoice += `<h3>Mahalo! Enjoy your: ${qty} ${brand}. Your total is \$${qty * brand_price}!</h3>`;
         } else {
-            receipt += `<h3><font color="red">${qty} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
+            invoice += `<h3><font color="red">${qty} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
         }
     }
     
-    // Redirect to the receipt page
-    response.redirect('/receipt.html');
-
-    // If you want to pass data to the receipt page, you can use query parameters
-    // response.redirect(`/receipt.html?receipt=${encodeURIComponent(receipt)}`);
+    // Redirect to the invoice page
+    response.redirect(`/invoice.html`);
 });
+
+
+
+//Get request to invoice
+app.get('/invoice.html', function(request, response, next) {
+	const invoiceContent = request.query.invoice;
+	response.send(invoiceContent);
+});
+
+
 
 /*
 //Process form
 app.post("/process_form", function (request, response) {
-    let receipt = '';
+    let invoice = '';
     for (let i in products) {
         let qtys = Number(request.body[`quantity_textbox${i}`]); // Convert to a number here
         let q = qtys; // No need for q = Number(qtys[i])
@@ -89,13 +96,13 @@ app.post("/process_form", function (request, response) {
         let brand_price = products[i]['price'];
         if (validateQuantity(q) === "") {
             products[i]['total_sold'] += q; // Use 'q' here
-            receipt += `<h3>Mahalo! Enjoy your: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`;
+            invoice += `<h3>Mahalo! Enjoy your: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`;
         } else {
-            receipt += `<h3><font color="red">${q} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
+            invoice += `<h3><font color="red">${q} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
         }
     }
-	//redirect to receipt page (chatgpt)
-    response.redirect('./public/receipt.html');
+	//redirect to invoice page (chatgpt)
+    response.redirect('./public/invoice.html');
 });
 */
 
