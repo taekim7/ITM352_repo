@@ -1,5 +1,5 @@
 // Add an event listener to ensure the DOM is fully loaded before running the script
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
   // Fetch product data from the server
   fetch('/products.js')
     .then(response => response.json())
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 });
-
+*/
 //declare and push to the DOM the store name at top and bottom
 const store_name="Cool Shoe Store";
 top_title.innerHTML=(store_name);
@@ -64,7 +64,7 @@ let products = [
   }
 ];
 
-/*
+
 for (i = 0; i < products.length; i++){
     document.querySelector('.main').innerHTML += `
     <section class="item" onmouseover="changeClassName(this);"
@@ -75,7 +75,7 @@ for (i = 0; i < products.length; i++){
     
     </section>`;
 }
-*/
+
 
 
 

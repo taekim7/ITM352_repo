@@ -24,3 +24,13 @@
     grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
     gap: 10px; /* Adjust the gap between grid items as needed */
   }
+
+  .main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
+    gap: 10px; /* Adjust the gap between grid items as needed */
+    padding: 20px;
+    background-color: #f2f2f2;
+    text-align: center;
+    
+  }
