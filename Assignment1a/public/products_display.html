@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <head>
     <title>Cool Shoe Store</title>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
@@ -32,8 +32,6 @@
 
 <main>
 <body>
-    <form id="productForm" name="quantity_form" action="/process_form" method="POST"></form>
-</form>
     <div id="cart-container">
         <h2>Shopping Cart</h2>
         <ul id="cart-list"></ul>
@@ -41,11 +39,13 @@
     <div id="product-display-container" class="product-grid">
         <!-- Product display will be inserted here dynamically -->
     </div>
+
     
-    <form id="purchase-form" action="./invoice.html" method="POST">
+
+    <form action = "./invoice.html" method = "POST" id="cartForm">
         <input type="submit" id="purchase-button" value="Purchase"></input>
-    </form>
-</form>
+        </form>
+
 </main>
 <footer>
     <h3><span id="bottom_title"></span></h3>

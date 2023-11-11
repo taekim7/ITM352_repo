@@ -51,13 +51,12 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 
 // Process form
 app.post("/process_form", function (request, response) {
-    let invoice = '';
-    
+	let receipt = '';
     // Assuming products is an array of items with a corresponding index
     for (let i in products) {
         let qty = Number(request.body[`quantity_textbox${i}`]); // Corrected the variable name to qty
         console.log("the quantity value is " + qty);
-        let validationMessage = validateQuantity(qty);
+        let validationMessage = validateQuantity(qty, products[i]["qty_available"]);
         let brand = products[i]['name'];
         let brand_price = products[i]['price'];
         
@@ -68,12 +67,23 @@ app.post("/process_form", function (request, response) {
             invoice += `<h3><font color="red">${qty} is not a valid quantity for ${brand}!<br>${validationMessage}</font></h3>`;
         }
     }
-    
     // Redirect to the invoice page
-    response.redirect(`/invoice.html`);
+    //response.redirect(`/invoice.html`);
+	response.redirect(`/invoice.html?receipt=${encodeURIComponent(receipt)}`);
 });
 
+// Validation function
+function validateQuantity(quantity, maxQuantity) {
+    let errorMessage = "";
+  
+    if (isNaN(quantity) || !Number.isInteger(quantity) || quantity < 0) {
+        errorMessage = "Invalid quantity. Please enter a non-negative integer quantity to order.";
+    } else if (quantity > maxQuantity) {
+        errorMessage = `Quantity exceeds the available stock (${maxQuantity}). Please enter a valid quantity to order.`;
+    }
 
+    return errorMessage;
+}
 
 //Get request to invoice
 app.get('/invoice.html', function(request, response, next) {
@@ -105,29 +115,3 @@ app.post("/process_form", function (request, response) {
     response.redirect('./public/invoice.html');
 });
 */
-
-
-//Validating Quantity
-function validateQuantity (quantity) {
-	let errorMessage = "";
-  
-	switch (true) {
-		case isNaN(quantity):
-		errorMessage = "Not a number. Please enter a non-negative quantity to order.";
-		break;
-		case quantity <= 0 && !Number.isInteger(quantity):
-		errorMessage = "Negative inventory and not an Integer. Please enter a non-negative quantity to order.";
-		break;
-		case quantity <= 0:
-		errorMessage = "Negative inventory. Please enter a non-negative quantity to order.";
-		break;
-		case !Number.isInteger(quantity):
-		errorMessage = "Not an Integer. Please enter a non-negative quantity to order.";
-		break;
-		default:
-			errorMessage = ""; //No errors
-			break;
-	}
-  
-	return errorMessage;
-  }

@@ -22,6 +22,16 @@
     color: black
   }
 
+  h1 {
+    font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 50px; /* Change the font size as needed */
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: white;
+    font-weight: bold;
+    background-color: red;
+  }
  
   .quantity {
     color: black;
@@ -37,7 +47,7 @@
   }
   /*Purchase Button*/
   input[type="submit"]{
-    font-size: 40px; 
+    font-size: 30px; 
     display: inline-block;
     padding: 5px 10px;
     background-color: skyblue;
@@ -47,7 +57,7 @@
     border-radius: 5px;
     cursor: pointer; /* Show a pointer cursor on hover */
     position: absolute;
-    top: 65%;
+    top: 95%;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -59,6 +69,8 @@
     padding: 25px;
   }
 
+
+  /*bottom title*/
   h3 {
     font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
     font-size: 70px; /* Change the font size as needed */
@@ -71,8 +83,8 @@
   }
 
 .item img {
-    width: 430px; /* Adjust the width as needed */
-    height: 300px; /* Adjust the height as needed */
+    width: 200px; /* Adjust the width as needed */
+    height: 250px; /* Adjust the height as needed */
     object-fit: cover; /* This property ensures the image fits within the specified dimensions and maintains its aspect ratio */
 }
 
@@ -111,7 +123,7 @@
     margin-top: 50px;
     margin-bottom: 50px;
     color: white;
-    background-color: white;
+    background-color: black;
     background-size:auto;
     font-weight: bold;
     font-style: italic;
@@ -123,7 +135,7 @@
     text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
-    color: black;
+    color: white;
     font-weight: bold;
     font-style:initial;
     top: 50px;
@@ -194,6 +206,7 @@
 .cart-item-content p:first-child {
   font-size:15px;
   margin:0;
+  color: black;
 }
 
 .cart-item-content p.quantity,
