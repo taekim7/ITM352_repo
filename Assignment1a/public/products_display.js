@@ -1,4 +1,6 @@
 //products_display.js
+let removeCartItemButtons = document.getElementsByClassName('btn-danger')
+console.log(removeCartItemButtons)
 
 // declare and push to the DOM the store name at top and bottom
 let store_name = "Cool Shoe Store";
@@ -9,6 +11,8 @@ bottom_title.innerHTML = "Wear History. It's cool.";
 let productDisplayContainer = document.getElementById('product-display-container');
 let cartList = document.getElementById('cart-list');
 
+
+// Function to generate table rows and apply quantity validation
 for (let i = 0; i < products.length; i++) {
   const productDiv = document.createElement('div');
   productDiv.classList.add('product-item'); // Add a class to the product item
@@ -19,6 +23,9 @@ for (let i = 0; i < products.length; i++) {
         <img src="${products[i]["image"]}" style="width:350px; height: auto;"/>
         <form class="addToCartForm">
         <input type="text" class="quantity-input" name="quantity_textbox${i}" value="0" min="0" data-max="${products[i]["qty_available"]}"/>
+        <span id = "quantity_textbox[${i}]_message">Enter a quantity</span>
+        <br>
+        <br>
         <button onclick="addToCart(${i})">Add to Cart</button>
         </form>
     `;
