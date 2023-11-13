@@ -1,22 +1,22 @@
-<!-- Receipt HTML -->
+<!-- invoice.html -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receipt</title>
+    <title>invoice</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" defer></script>
     <link rel="stylesheet" type="text/css" href="invoice.css">
+    <script src="./products.js"></script>
     <!--Request to server-->
-    <script src = "./product.js"></script>
     
 </head>
     <body>
       <div class="jumbotron">
         <div class="container text-center">
         <h1><span id="top_title">Cool Shoe Store</span></h1>
-        <p>Cool Shoes for Cool People</p>
+        <p>Here is your invoice. Thank you for your purchase and enjoy your shoes!</p>
         </div>
         <table border="2">
             <tbody>
@@ -43,7 +43,7 @@
               </tr>
               <tr>
                 <td colspan="3">Shipping</td>
-                <td id = "shipping cell">$0.00</td>
+                <td id = "shipping_cell">$0.00</td>
               </tr>
               <tr>
                 <td colspan="3">Total</td>
