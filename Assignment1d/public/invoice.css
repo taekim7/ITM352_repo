@@ -1,0 +1,16 @@
+#invoiceTable img {
+    max-width: 100px;
+    max-height: fit-content;
+    object-fit: cover;
+}
+
+
+body {
+background-image: url('/images/background_concord11.jpg'); /* Replace with the actual path to your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Ensure the background covers the entire viewport height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
