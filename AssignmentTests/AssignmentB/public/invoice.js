@@ -7,14 +7,18 @@ let quantity = [];
 let q = Number(params.get('quantity'));
 let error = params.get('error');
 
-if (error){
+if (error==='true') {
   alert(error);
 }
 
 for (let i = 0; i < products.length; i++) {
-  let quantityValue = params.get(`quantity${i}`);
-  if (quantityValue !== null){
-    quantity [products[i].quantityIndex] = Number (quantityValue);
+  let quantityValue = params.get(`product${i}`);
+  console.log(quantityValue);
+  if (quantityValue !== null) {
+    quantity[i] = Number(quantityValue);
+  } else {
+    // If quantityValue is null, default it to 0 or another appropriate default value
+    quantity[i] = 0;
   }
 }
 
@@ -78,17 +82,18 @@ function generateItemRows() {
     if (validationMessage !== "") {
       hasErrors = true;
       let row = table.insertRow();
-      row.insertCell(0).innerHTML = item.name;
-      row.insertCell(1).innerHTML = validationMessage;
+      row.insertCell(1).innerHTML = item.name;
+      row.insertCell(2).innerHTML = validationMessage;
     } else if (itemQuantity > 0) {
       let extendedPrice = item.price * itemQuantity;
       subtotal += extendedPrice;
 
       let row = table.insertRow();
-      row.insertCell(0).innerHTML = item.name;
-      row.insertCell(1).innerHTML = itemQuantity;
-      row.insertCell(2).innerHTML = '$' + item.price.toFixed(2);
-      row.insertCell(3).innerHTML = '$' + extendedPrice.toFixed(2);
+      row.insertCell(0).innerHTML = `<img src="${item.image}" class="table-image" alt="Product Image">`;
+      row.insertCell(1).innerHTML = item.name;
+      row.insertCell(2).innerHTML = itemQuantity;
+      row.insertCell(3).innerHTML = '$' + item.price.toFixed(2);
+      row.insertCell(4).innerHTML = '$' + extendedPrice.toFixed(2);
     }
     }
     //if no error, display total

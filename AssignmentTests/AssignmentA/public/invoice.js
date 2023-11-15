@@ -16,9 +16,12 @@ for (let i = 0; i < products.length; i++) {
   console.log(quantityValue);
   if (quantityValue !== null){
     quantity[i] = Number(quantityValue);
+  } else {
+    quantity[i] = 0;
+  }
    
   }
-}
+
 
 
 

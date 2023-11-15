@@ -89,7 +89,7 @@ app.use(express.urlencoded({ extended: true }));
         let qty = POST[`qty${i}`];
         //update quantities
         products[i].qty_sold += Number(qty);
-        products[i].qty_available = products[i].qty_available - qty;
+        products[i].qty_available = products[i].qty_available - Number(qty);
       }
       //redirect to invoice page with valid data in url
       response.redirect("./invoice.html?valid&" + qs.stringify(POST));
