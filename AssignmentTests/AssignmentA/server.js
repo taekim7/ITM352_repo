@@ -8,14 +8,26 @@ const app = express();
 
 const qs = require('querystring');
 
-// Route all other GET requests to serve static files from a directory named "public"
-app.use(express.static(__dirname + '/public'));
+
+// Monitor all requests regardless of their method (GET, POST, PUT, etc) and their path (URL)
+app.all('*', function (request, response, next) {
+	console.log(request.method + ' to ' + request.path);
+	next();
+ });
+
 
 /* Import data from a JSON file containing information about products
 __dirname represents the directory of the current module (where server.js is located)
 __dirname + "./products.json" specifies the location of products.json
 */
-let products = require(__dirname + '/products.json');
+
+// Route all other GET requests to serve static files from a directory named "public"
+app.use(express.static(__dirname + '/public'));
+
+ // Start the server; listen on port 8080 for incoming HTTP requests
+ app.listen(8080, () => console.log(`listening on port 8080`));
+
+ let products = require(__dirname + '/products.json');
 
 for (i in products) {
   products.forEach( (prod,i) => {prod.total_sold = 0});
@@ -37,97 +49,84 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-// Monitor all requests regardless of their method (GET, POST, PUT, etc) and their path (URL)
-app.all('*', function (request, response, next) {
-	console.log(request.method + ' to ' + request.path);
-	next();
- });
 
 
 /////////////////////////////////////////////////////////////////////////////Process Form Stuff////////////////////////////////////////////////////////////////////////////////////
  app.post("/process_form", function (request, response) {
-        console.log("Processing form...");
+  //Extract content of request's body
   let POST = request.body;
+  //Assume input boxes are all initially empty
+  let has_qty = false;
+  //create object to store error messages for each product's quantity input
+  let errorObject = {};
+
 
     // Loop through the products
     for (let i in products) {
       let qty = POST[`quantity_textbox${i}`];
       console.log(qty);
-      let validationMessage = validateQuantity(qty);
+      has_qty = has_qty || (qty > 0);
+
+      //validate using the udpdated validateQuantity function
+      let errorMessages = validateQuantity(qty, products [i].qty_available);
   
       // Validate quantity
-      if (validationMessage === "") {
-        // Update the quantities array
-        quantities.push(qty);
-        
-        // Append information to the URL string
-        url += `&prod${i}=${qty}`;
-      } else {
-        hasValidationErrors = true;
-        break; // Break the loop if there is an error
+      if (errorMessages.length > 0) {
+        errorObject[`qty${i}_error`] = errorMessages.join(', ');
       }
     }
+
+    //If all input boxes are empty and there are no errors
+    if (has_qty == false && Object.keys(errorObject).length == 0) {
+      //redirect to products pages with "error" parameter in url
+      response.redirect("./products_display.html?error");
+    }
   
-    // If there are validation errors, redirect to the store with an error parameter
-    if (hasValidationErrors) {
-    response.redirect("./products_display.html?"+qs.stringify(request.body) + "&validationMessage");
-    } else {
-      // If there are no errors, update quantities in the products array
-      for (let i in products) {
-        // Assuming products is an array of items with a corresponding index
-        products[i]['qty_available'] -= quantities[i];
-        products[i]['total_sold'] += Number(quantities[i]);
+    //if there is an input and there are no errors
+    else if (has_qty == true && Object.keys(errorObject).length ==0) {
+      //update product quantities and redirect to invoice page with valid data
+      for (let i in products){
+        let qty = POST[`qty${i}`];
+        //update quantities
+        products[i].qty_sold += Number(qty);
+        products[i].qty_available = products[i].qty_available - qty;
       }
-  
-      // Redirect to invoice.html with relevant data
-      response.redirect("/invoice.html?valid&"+qs.stringify(request.body));
+      //redirect to invoice page with valid data in url
+      response.redirect("./invoice.html?valid&" + qs.stringify(POST));
+    }
+    //If there is an input error 
+    else if (Object.keys(errorObject).length > 0) {
+      //redirect to products page with "inputErr" parameter in url
+      response.redirect("./products_display.html?" + qs.stringify(POST) + `&inputErr`);
     }
   });
 
 
+// Function to validate quantity
+function validateQuantity(quantity, availableQuantity) {
+  let errors = [];
 
+  quantity = Number(quantity); 
 
- // Start the server; listen on port 8080 for incoming HTTP requests
- app.listen(8080, () => console.log(`listening on port 8080`));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Validate Quantity
-function validateQuantity(quantity, maxQuantity) {
-    let errorMessage = "";
-
-    switch (true) {
-        case isNaN(quantity):
-            errorMessage = "Not a number. Please enter a non-negative quantity to order.";
-            break;
-        case quantity <= 0 && !Number.isInteger(quantity):
-            errorMessage = "Negative inventory and not an Integer. Please enter a non-negative quantity to order.";
-            break;
-        case quantity <= 0:
-            errorMessage = "Negative inventory. Please enter a non-negative quantity to order.";
-            break;
-        case !Number.isInteger(quantity):
-            errorMessage = "Not an Integer. Please enter a non-negative quantity to order.";
-            break;
-        case quantity > maxQuantity:
-            errorMessage = `Quantity exceeds the available stock (${maxQuantity}). Please enter a valid quantity.`;
-            break;
-        default:
-            errorMessage = ""; // No errors
-            break;
-    }
-
-    return errorMessage;
+  switch (true) {
+    case isNaN(quantity) || quantity === '':
+        errors.push("Not a number. Please enter a non-negative quantity to order.");
+        break;
+    case quantity < 0 && !Number.isInteger(quantity):
+        errors.push("Negative inventory and not an Integer. Please enter a non-negative quantity to order.");
+        break;
+    case quantity < 0:
+        errors.push("Negative inventory. Please enter a non-negative quantity to order.");
+        break;
+    case quantity !=0 && !Number.isInteger(quantity):
+        errors.push("Not an Integer. Please enter a non-negative quantity to order.");
+        break;
+    case quantity > availableQuantity:
+        errors.push(`Quantity exceeds the available stock (${availableQuantity}). Please enter a valid quantity.`);
+        break;
+    default:
+        errors = [];
+        break;
+  }
+  return errors;
 }

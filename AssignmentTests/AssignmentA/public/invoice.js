@@ -4,17 +4,19 @@
 //Product Data
 const params = (new URL (document.location)).searchParams;
 let quantity = [];
-let q = Number(params.get('quantity'));
+//let q = Number(params.get('quantity'));
 let error = params.get('error');
 
-if (error){
-  alert(error);
-}
+//if (error){
+//  alert(error);
+//}
 
 for (let i = 0; i < products.length; i++) {
-  let quantityValue = params.get(`quantity${i}`);
+  let quantityValue = params.get(`quantity_textbox${i}`);
+  console.log(quantityValue);
   if (quantityValue !== null){
-    quantity [products[i].quantityIndex] = Number (quantityValue);
+    quantity[i] = Number(quantityValue);
+   
   }
 }
 

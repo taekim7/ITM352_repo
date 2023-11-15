@@ -30,27 +30,7 @@ for (let i = 0; i < products.length; i++) {
 
 
 
-/*
-  //Declare params
-let params = (new URL(document.location)).searchParams;
-if (params.has('error')) {
-    document.getElementById('error-message').innerHTML = "no quantities selected";
-    setTimeout (() => {
-        document.getElementById('error-message').innerHTML = "";
-    }, 3000);
-    }
-    for (let i in products) {
-        if (params.get(`qty${i}`) == 0) {
-            qty_form[`qty${i}_entered`].value = '';
-        }else{
-            qty_form[`qty${i}_entered`].value = params.get(`qty${i}`);
-            qty_form[`qty${i}_entered`].parentElement.style.borderColor = "red";
-        }
-        errors = isNonNegInt(params.get(`qty${i}`), true)
-        document.getElementById(`qty${i}_error`).innerHTML = errors.join('');
-            
-    }
-*/
+
 
 // Get the URL
 let params = (new URL(document.location)).searchParams;
@@ -60,7 +40,6 @@ window.onload = function() {
     Display message to user and allow them to edit their inputs
     User input is made sticky by retrieving quantities from the URL 
     Those inputs are validated by isNonNegInt again */
-
     if (params.has('error')) {
        
         document.getElementById('errMsg').innerHTML = "No quantities selected.";
@@ -75,20 +54,25 @@ window.onload = function() {
         }, 2000);
 
         for (let i in products) {
-            if (params.get(`qty${i}`) == 0) {
-                qty_form[`qty${i}_entered`].value = '';
-            } else {
-                qty_form[`qty${i}_entered`].value = params.get(`qty${i}`);
-                qty_form[`qty${i}_entered`].parentElement.style.borderColor = "red";
+            let qtyInput = qty_form[`qty${i}_entered`];
+            let qtyError = document.getElementById(`qty${i}_error`);
+
+            if (params.get(`qty${i}`) !==null) {
+                qtyInput_value = params.get(`qty${i}`);
             }
-            errors = validateQuantity(params.get(`qty${i}`))
-            document.getElementById(`qty${i}_error`).innerHTML = errors.join('');  
+
+            //validate quantity and display error
+            let errorMessages = validateQuantity(qtyInput.value, products[i].qty_available);
+            if (errorMessages.length > 0) {
+                qtyError.innerHTML = errorMessages.join('<br>');
+                qtyInput.parentElement.style.borderColor = "red";
+            } else {
+                qtyError.innerHTML = "";
+                qtyInput.parentElement.style.borderColor = "black";
+            }
         }
-        alert("errors = "+errors);
     }
 }
-
-
 
 
 // Add an event listener to each quantity input for real-time validation
@@ -103,34 +87,34 @@ document.querySelectorAll('.quantity-input').forEach((input, i) => {
   });
 });
 
-
   
 // Function to validate quantity
-function validateQuantity(quantity, maxQuantity) {
-  let errorMessage = "";
+function validateQuantity(quantity, availableQuantity) {
+  let errors = [];
+
+  quantity = Number(quantity); 
 
   switch (true) {
-      case isNaN(quantity):
-          errorMessage = "Not a number. Please enter a non-negative quantity to order.";
-          break;
-      case quantity <= 0 && !Number.isInteger(quantity):
-          errorMessage = "Negative inventory and not an Integer. Please enter a non-negative quantity to order.";
-          break;
-      case quantity <= 0:
-          errorMessage = "Negative inventory. Please enter a non-negative quantity to order.";
-          break;
-      case !Number.isInteger(quantity):
-          errorMessage = "Not an Integer. Please enter a non-negative quantity to order.";
-          break;
-      case quantity > maxQuantity:
-          errorMessage = `Quantity exceeds the available stock (${maxQuantity}). Please enter a valid quantity.`;
-          break;
-      default:
-          errorMessage = ""; // No errors
-          break;
+    case isNaN(quantity) || quantity === '':
+        errors.push("Not a number. Please enter a non-negative quantity to order.");
+        break;
+    case quantity < 0 && !Number.isInteger(quantity):
+        errors.push("Negative inventory and not an Integer. Please enter a non-negative quantity to order.");
+        break;
+    case quantity < 0:
+        errors.push("Negative inventory. Please enter a non-negative quantity to order.");
+        break;
+    case quantity !=0 && !Number.isInteger(quantity):
+        errors.push("Not an Integer. Please enter a non-negative quantity to order.");
+        break;
+    case quantity > availableQuantity:
+        errors.push(`Quantity exceeds the available stock (${availableQuantity}). Please enter a valid quantity.`);
+        break;
+    default:
+        errors = [];
+        break;
   }
-
-  return errorMessage;
+  return errors;
 }
 
 
