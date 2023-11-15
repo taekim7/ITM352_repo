@@ -1,0 +1,192 @@
+/*products_display.css*/
+/* Remove the navbar's default rounded borders and increase the bottom margin */ 
+/* Remove the navbar's default rounded borders and increase the bottom margin */ 
+.navbar {
+  margin-bottom: 50px;
+  border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */ 
+ .jumbotron {
+  margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+  background-color: #f2f2f2;
+  padding: 25px;
+}
+  /* Remove the jumbotron's default bottom margin */ 
+   .jumbotron {
+    margin-bottom: 0;
+    background-image: url(./images/bballcourt.jpeg);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /*Top Title */
+  h1 {
+    font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 50px; /* Change the font size as needed */
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: yellow;
+    background-color: red;
+    background-size:auto;
+    font-weight: bold;
+    font-style: italic;
+  }
+  #top_title {
+    color: black;
+  }
+
+  a {
+    color: darkblue;
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: skyblue;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 30px;
+  }
+  /*text box quantity*/
+  .main input[type="text"]{
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    background-color: white;
+    color: black
+  }
+
+
+  .quantity {
+    color: black;
+  }
+  .footer {
+    text-align: center;
+    position: fixed;
+    bottom:0;
+    left: 0;
+    right: 0;
+    background-color: azure;
+    padding: 20px 0;
+  }
+  /*Purchase Button*/
+  input[type="submit"]{
+    font-size: 30px; 
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: skyblue;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; /* Show a pointer cursor on hover */
+    position: relative;
+    top: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  /*background image*/
+
+  /* Add a gray background color and some padding to the footer */
+  footer {
+    background-color: white;
+    padding: 25px;
+  }
+
+
+  /*bottom title*/
+  h3 {
+    font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 70px; /* Change the font size as needed */
+    text-align: center;
+    margin-top: 150px;
+    margin-bottom: 50px;
+    color: black;
+    font-weight: bold;
+    font-style: oblique;
+  }
+
+.item img {
+    width: 200px; /* Adjust the width as needed */
+    height: 250px; /* Adjust the height as needed */
+    object-fit: cover; /* This property ensures the image fits within the specified dimensions and maintains its aspect ratio */
+}
+
+#product-display-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
+    gap: 10px; /* Adjust the gap between grid items as needed */
+}
+
+  .main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
+    gap: 10px; /* Adjust the gap between grid items as needed */
+    padding: 0;
+    margin: 0;
+    background-color: linear-gradient(45deg, black 0%, black 50%, red 50%, red 100%); 
+    text-align: center;
+    
+  }
+  body{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+      to right,
+      red 0%,
+      light red 50%,
+      black 50%,
+      black 100%
+    );
+  }
+
+
+
+  p {
+    font-family: 'Lato', sans-serif; /* Change "Your Desired Font" to the font you want to use */
+    font-size: 20px; /* Change the font size as needed */
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: white;
+    font-weight: bold;
+    font-style:initial;
+    top: 50px;
+    bottom: 50%;
+  }
+
+  /* Navbar background color */
+.navbar {
+  background-color: black; /* Change the background color as needed */
+}
+
+/* Navbar text color */
+.navbar-nav > li > a,
+.navbar-brand {
+  color: white !important; /* Change the text color as needed */
+}
+
+/* Active link color */
+.navbar-nav > li.active > a,
+.navbar-nav > li.active > a:hover,
+.navbar-nav > li.active > a:focus {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+/* Remove box around the words */
+.navbar-nav > li > a,
+.navbar-nav > li > a:focus,
+.navbar-nav > li > a:hover,
+.navbar-brand,
+.navbar-brand:focus,
+.navbar-brand:hover {
+  background-color: transparent !important;
+  border: none !important;
+}
