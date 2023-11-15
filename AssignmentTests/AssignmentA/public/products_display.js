@@ -30,8 +30,6 @@ for (let i = 0; i < products.length; i++) {
 
 
 
-
-
 // Get the URL
 let params = (new URL(document.location)).searchParams;
 
@@ -58,7 +56,8 @@ window.onload = function() {
             let qtyError = document.getElementById(`qty${i}_error`);
 
             if (params.get(`qty${i}`) !==null) {
-                qtyInput_value = params.get(`qty${i}`);
+                //qtyInput_value = params.get(`qty${i}`);
+                qtyInput.value = params.get(`qty${i}`);
             }
 
             //validate quantity and display error

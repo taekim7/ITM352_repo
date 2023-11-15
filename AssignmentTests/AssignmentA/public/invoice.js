@@ -80,17 +80,18 @@ function generateItemRows() {
     if (validationMessage !== "") {
       hasErrors = true;
       let row = table.insertRow();
-      row.insertCell(0).innerHTML = item.name;
-      row.insertCell(1).innerHTML = validationMessage;
+      row.insertCell(1).innerHTML = item.name;
+      row.insertCell(2).innerHTML = validationMessage;
     } else if (itemQuantity > 0) {
       let extendedPrice = item.price * itemQuantity;
       subtotal += extendedPrice;
 
       let row = table.insertRow();
-      row.insertCell(0).innerHTML = item.name;
-      row.insertCell(1).innerHTML = itemQuantity;
-      row.insertCell(2).innerHTML = '$' + item.price.toFixed(2);
-      row.insertCell(3).innerHTML = '$' + extendedPrice.toFixed(2);
+      row.insertCell(0).innerHTML = `<img src="${item.image}" class="table-image" alt="Product Image">`;
+      row.insertCell(1).innerHTML = item.name;
+      row.insertCell(2).innerHTML = itemQuantity;
+      row.insertCell(3).innerHTML = '$' + item.price.toFixed(2);
+      row.insertCell(4).innerHTML = '$' + extendedPrice.toFixed(2);
     }
     }
     //if no error, display total
@@ -98,3 +99,4 @@ function generateItemRows() {
       document.getElementById('total_cell').innerHTML = '$' + total.toFixed(2);
     }
   }
+  
