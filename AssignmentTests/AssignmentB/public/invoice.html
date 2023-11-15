@@ -18,7 +18,9 @@
         <h1><span id="top_title">Cool Shoe Store</span></h1>
         <p>Here is your invoice. Thank you for your purchase and enjoy your shoes!</p>
         </div>
-        <table border="2">
+        <div class ="container">
+        <!--Invoice Table Creation-->
+        <table class="table">
             <tbody>
               <thead>
               <tr>
@@ -32,25 +34,8 @@
               <tbody id="invoiceTable">
               <!-- Product rows will be added dynamically using JavaScript -->
               </tbody>
-              <tfoot>
-              <tr>
-                <td colspan="3">Sub-total</td>
-                <td id="subtotal_cell">$0.00</td>
-              </tr>
-              <tr>
-                <td colspan="3">Hawaii Sales Tax 4%</td>
-                <td id="tax_cell">$0.00</td>
-              </tr>
-              <tr>
-                <td colspan="3">Shipping</td>
-                <td id = "shipping_cell">$0.00</td>
-              </tr>
-              <tr>
-                <td colspan="3">Total</td>
-                <td id="total_cell">$0.00</td>
-              </tr>
-              </tfoot>
             </table>
+          </div>
             <script src="invoice.js" type="module"></script>
 </body>
 </html>

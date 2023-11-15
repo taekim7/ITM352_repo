@@ -1,56 +1,92 @@
 //invoice.js
-
-
 //Product Data
 const params = (new URL (document.location)).searchParams;
-let quantity = [];
-let q = Number(params.get('quantity'));
-let error = params.get('error');
 
-if (error==='true') {
-  alert(error);
-}
-
-for (let i = 0; i < products.length; i++) {
-  let quantityValue = params.get(`product${i}`);
-  console.log(quantityValue);
-  if (quantityValue !== null) {
-    quantity[i] = Number(quantityValue);
-  } else {
-    // If quantityValue is null, default it to 0 or another appropriate default value
-    quantity[i] = 0;
+// On load, if there is no 'valid' key, redirect the user back to the Home page
+window.onload = function() {
+  if (!params.has('valid')) {
+      document.write(`
+          <head>
+              <link rel="stylesheet" href="syle.css">
+          </head>
+          <body style="text-align: center; margin-top: 10%;">
+              <h2>ERROR: No form submission detected.</h2>
+              <h4>Return to <a href="index.html">Home</a></h4> 
+          </body>
+      `)
   }
 }
 
 
-
 //Variables for subtotal, tax, shipping charge, and total
 let subtotal = 0;
-let taxRate = 0.04;
-let taxAmount = 0;
-let total = 0;
-let shippingCharge = 0;
 
-generateItemRows();
-
-if (subtotal <= 300) {
-  shippingCharge = 5;
-} else if (subtotal <= 600) {
-  shippingCharge = 10;
-} else {
-  shippingCharge = subtotal * 0.04;
+let qty = [];
+for (let i in products) {
+    qty.push(params.get(`qty${i}`));
 }
 
-//Calculate total with shipping
-taxAmount = subtotal * taxRate;
-total = subtotal + taxAmount + shippingCharge;
+for (let i in qty) {
+    if (qty[i] == 0 || qty[i] == '') continue;
+
+    extended_price = (params.get(`qty${i}`) * products[i].price).toFixed(2);
+    subtotal += Number(extended_price);
+
+    document.querySelector('#invoice_table').innerHTML += `
+        <tr style="border: none;">
+            <td width="10%"><img src="${products[i].image}" alt="${products[i].alt}" style="border-radius: 5px;"></td>
+            <td>${products[i].name}</td>
+            <td>${qty[i]}</td>
+            <td>${products[i].qty_available}</td>
+            <td>$${products[i].price.toFixed(2)}</td>
+            <td>$${extended_price}</td>
+        </tr>
+    `;
+}
 
 
-//Setting subtotal, tax, and total cells
-document.getElementById('subtotal_cell').innerHTML = '$' + subtotal.toFixed(2);
-document.getElementById('tax_cell').innerHTML = '$' + taxAmount.toFixed(2);
-document.getElementById('shipping_cell').innerHTML = '$' + shippingCharge.toFixed(2);
-document.getElementById('total_cell').innerHTML = `$${total.toFixed(2)}`;
+
+
+//Tax Rate
+let tax_rate = 0.04;
+let tax_amt = subtotal * tax_Rate;
+
+
+//Shipping Charge
+if (subtotal < 300) {
+  shipping = 5;
+  shipping_display = `$${shipping.toFixed(2)}`;
+  total = Number(tax_amt + subtotal + shipping);
+} else if (subtotal >= 300 && subtotal < 500) {
+  shipping = 10;
+  shipping_display = `$${shipping.toFixed(2)}`;
+  total = Number(tax_amt + subtotal + shipping);
+} else {
+  shipping = 0;
+  shipping_display = 'FREE';
+  total = Number(tax_amt + subtotal + shipping);
+}
+
+
+document.querySelector('#total_display').innerHTML += `
+    <tr style="border-top: 2px solid black;">
+        <td colspan="5" style="text-align:center;">Sub-total</td>
+        <td>$${subtotal.toFixed(2)}</td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:center;">Tax @ ${Number(tax_rate) * 100}%</td>
+        <td>$${tax_amt.toFixed(2)}</td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:center;">Shipping</td>
+        <td>${shipping_display}</td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:center;"><b>Total</td>
+        <td><b>$${total.toFixed(2)}</td>
+    </tr>
+`;
+
 
 //I tried a different method..but it didn't work
 function validateQuantity (quantity) {
@@ -67,37 +103,3 @@ function validateQuantity (quantity) {
   }
   }
   
-
-//function to generate table rows and apply quantity validation
-function generateItemRows() {
-  let table = document.getElementById('invoiceTable');
-  table.innerHTML = '';
-  let hasErrors = false;
-  
-  for (let i = 0; i < products.length; i++) {
-    let item = products[i];
-    let itemQuantity = quantity[item.quantityIndex];
-
-    let validationMessage = validateQuantity(itemQuantity);
-    if (validationMessage !== "") {
-      hasErrors = true;
-      let row = table.insertRow();
-      row.insertCell(1).innerHTML = item.name;
-      row.insertCell(2).innerHTML = validationMessage;
-    } else if (itemQuantity > 0) {
-      let extendedPrice = item.price * itemQuantity;
-      subtotal += extendedPrice;
-
-      let row = table.insertRow();
-      row.insertCell(0).innerHTML = `<img src="${item.image}" class="table-image" alt="Product Image">`;
-      row.insertCell(1).innerHTML = item.name;
-      row.insertCell(2).innerHTML = itemQuantity;
-      row.insertCell(3).innerHTML = '$' + item.price.toFixed(2);
-      row.insertCell(4).innerHTML = '$' + extendedPrice.toFixed(2);
-    }
-    }
-    //if no error, display total
-    if (!hasErrors){
-      document.getElementById('total_cell').innerHTML = '$' + total.toFixed(2);
-    }
-  }
