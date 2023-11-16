@@ -21,7 +21,7 @@ for (let i = 0; i < products.length; i++) {
         <h2>${products[i]["name"]}  \$${products[i]["price"]}</h2>
         <p style="color: black;">Quantity: <span class="quantity">${products[i]["qty_available"]}</span></p>
         <img src="${products[i]["image"]}" style="width:350px; height: auto;"/>
-        <input type="text" class="quantity-input" name="quantity_textbox${i}" value="0" min="0" data-max="${products[i]["qty_available"]}"/>
+        <input type="text" class="quantity-input" name="quantity_textbox" value="0" min="0" data-max="${products[i]["qty_available"]}"/>
         <span class="quantity-message" id="quantity_textbox_${i}_message">Enter a quantity</span>
     `;
   productDisplayContainer.appendChild(productDiv);

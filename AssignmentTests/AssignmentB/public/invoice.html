@@ -23,17 +23,18 @@
         <table class="table">
             <tbody>
               <thead>
-              <tr>
-                <th>Image</th>
-                <th style="text-align: center;" width="43%">Shoe</th>
-                <th style="text-align: center;" width="11%">Quantity</th>
-                <th style="text-align: center;" width="13%">Price</th>
-                <th style="text-align: center;" width="54%">extended price</th>
+                <tr>
+                  <th colspan="2">Shoe</th>
+                  <th>Quantity</th>
+                  <th>Remaining Inventory</th>
+                  <th>Price</th>
+                  <th>Extended Price</th>
               </tr>
               </thead>
-              <tbody id="invoiceTable">
+              <tbody id="invoice_table">
               <!-- Product rows will be added dynamically using JavaScript -->
               </tbody>
+              <tbody id="total_display"></tbody>
             </table>
           </div>
             <script src="invoice.js" type="module"></script>

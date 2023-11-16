@@ -49,6 +49,7 @@ app.all('*', function (request, response, next) {
 app.post("/process_form", function (request, response) {
   // Get textbox inputs as an array
   let qtys = request.body[`quantity_textbox`];
+  console.log(qtys);
   // Initially set the validity check to true
   let valid = true;
   // Initialize an empty string to hold the URL parameters
@@ -87,7 +88,9 @@ app.post("/process_form", function (request, response) {
 
   // If validity is false, redirect to the store with an error parameter
   if (valid === false) {
-      response.redirect(`store.html?error=true` + url);
+      //response.redirect(`invoice.html?error=true` + url);
+      console.log(`Redirecting to invoice.html?valid=true&${url}`);
+      response.redirect(`invoice.html?valid=true&${url}`);
   }
   // Otherwise, redirect to the invoice with the URL parameters attached
   else {

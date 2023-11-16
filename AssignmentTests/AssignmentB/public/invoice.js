@@ -5,21 +5,18 @@ const params = (new URL (document.location)).searchParams;
 // On load, if there is no 'valid' key, redirect the user back to the Home page
 window.onload = function() {
   if (!params.has('valid')) {
-      document.write(`
-          <head>
-              <link rel="stylesheet" href="syle.css">
-          </head>
-          <body style="text-align: center; margin-top: 10%;">
-              <h2>ERROR: No form submission detected.</h2>
-              <h4>Return to <a href="index.html">Home</a></h4> 
-          </body>
-      `)
+    console.error("No 'valid' parameter detected. Redirecting to Home.");
+      document.write(`<head><link rel="stylesheet" href="invoice.css"></head><body style="text-align: center; margin-top: 10%;"><h2>ERROR: No form submission detected.</h2><h4>Return to <a href="products_display.html">Home</a></h4> </body>`)
   }
 }
 
 
 //Variables for subtotal, tax, shipping charge, and total
 let subtotal = 0;
+let extended_price;
+let shipping;
+let shipping_display;
+let total;
 
 let qty = [];
 for (let i in products) {
@@ -34,7 +31,7 @@ for (let i in qty) {
 
     document.querySelector('#invoice_table').innerHTML += `
         <tr style="border: none;">
-            <td width="10%"><img src="${products[i].image}" alt="${products[i].alt}" style="border-radius: 5px;"></td>
+            <td width="10%"><img src="${products[i].image}" alt="${products[i].alt}" class="invoice-img"></td>
             <td>${products[i].name}</td>
             <td>${qty[i]}</td>
             <td>${products[i].qty_available}</td>
@@ -49,7 +46,7 @@ for (let i in qty) {
 
 //Tax Rate
 let tax_rate = 0.04;
-let tax_amt = subtotal * tax_Rate;
+let tax_amt = subtotal * tax_rate;
 
 
 //Shipping Charge
@@ -87,7 +84,7 @@ document.querySelector('#total_display').innerHTML += `
     </tr>
 `;
 
-
+/*
 //I tried a different method..but it didn't work
 function validateQuantity (quantity) {
   if (isNaN(quantity)) {
@@ -102,4 +99,4 @@ function validateQuantity (quantity) {
   return "";
   }
   }
-  
+  */
