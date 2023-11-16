@@ -1,102 +1,113 @@
-//invoice.js
-//Product Data
-const params = (new URL (document.location)).searchParams;
-
-// On load, if there is no 'valid' key, redirect the user back to the Home page
-window.onload = function() {
-  if (!params.has('valid')) {
-    console.error("No 'valid' parameter detected. Redirecting to Home.");
-      document.write(`<head><link rel="stylesheet" href="invoice.css"></head><body style="text-align: center; margin-top: 10%;"><h2>ERROR: No form submission detected.</h2><h4>Return to <a href="products_display.html">Home</a></h4> </body>`)
-  }
-}
+//Invoice JS
 
 
-//Variables for subtotal, tax, shipping charge, and total
+//initializes variables
+let extendedPrices = [];
+let extendedPrice = 0;
 let subtotal = 0;
-let extended_price;
-let shipping;
-let shipping_display;
-let total;
+let taxAmount = 0;
+let shipping = 0;
 
-let qty = [];
-for (let i in products) {
-    qty.push(params.get(`qty${i}`));
+//opens the url params
+let params = (new URL(document.location)).searchParams;
+        //initializes empty order array
+        let order = [];
+        //for each prod, push the value to the array
+        params.forEach((value,key) => {
+            if (key.startsWith('prod')) {
+                    order.push(parseInt(value));
+                }
+        });
+
+        
+//generate all the item rows
+generateItemRows();
+
+//calculate tax
+ let tax = (subtotal*0.04);
+
+//checks the shipping price
+if(subtotal <= 300)
+{
+    shipping = 20;
+}else if(subtotal <=600)
+{
+    shipping = 40;
+}
+else{
+    shipping = subtotal*.04;
 }
 
-for (let i in qty) {
-    if (qty[i] == 0 || qty[i] == '') continue;
+//calculates total
+let total = tax+subtotal+shipping;
 
-    extended_price = (params.get(`qty${i}`) * products[i].price).toFixed(2);
-    subtotal += Number(extended_price);
 
-    document.querySelector('#invoice_table').innerHTML += `
-        <tr style="border: none;">
-            <td width="10%"><img src="${products[i].image}" alt="${products[i].alt}" class="invoice-img"></td>
-            <td>${products[i].name}</td>
-            <td>${qty[i]}</td>
-            <td>${products[i].qty_available}</td>
-            <td>$${products[i].price.toFixed(2)}</td>
-            <td>$${extended_price}</td>
-        </tr>
-    `;
+//insert footer row values
+document.getElementById("subtotal_cell").innerHTML = "$" + subtotal.toFixed(2);
+document.getElementById("tax_cell").innerHTML = "$" + tax.toFixed(2);
+document.getElementById("shipping_cell").innerHTML = "$"+shipping.toFixed(2);
+document.getElementById("total_cell").innerHTML = "$"+total.toFixed(2);
+
+
+//function to validate the quantity, returns a string if not a number, negative, not an integer, or a combination of both
+//if no errors in quantity, returns empty string
+function validateQuantity(quantity){
+    if(isNaN(quantity)){
+        return "Please Enter a Number";
+    }else if (quantity<0 && !Number.isInteger(quantity)){
+        return "Please Enter a Positive Integer";
+    }else if (quantity <0){
+        return "Please Enter a Positive Number";
+    }else if(!Number.isInteger(quantity)){
+        return "Please Enter an Integer";
+    }else{
+        return"";
+    }
+
 }
+//generate all the item rows
+function generateItemRows(){
 
+    //sets table to the invoice table on the html
+    let table = document.getElementById("invoiceTable");
 
+    //checks if it has errors, set it to no for now
+    let hasErrors = false; 
 
+    //for each member of the array
+    for(let i=0;i<products.length;i++){
+        
+        //sets item and itemQuantity from the products array, and the array gotten from the url
+        let item = products[i];
+        let itemQuantity = order[i];
+        
+        //validate the quantity, we are just kinda looking for if its negative so we dont show it
+        let validationMessage = validateQuantity(itemQuantity);
+        
+        
+        //if there is an error, just ignore this 
+        if(validationMessage !== ""){
+            hasErrors = true;
+            let row =table.insertRow();
+            row.insertCell(0).insertHTML = item.name;
+            row.insertCell(1).innerHTML = validationMessage;
+        } 
+        //otherwise, lets create the row in the invoice and update the extended price and subtotal
+        else if(itemQuantity >0){
+            //update the variables
+            extendedPrice = item.price * itemQuantity;
+            subtotal += extendedPrice;
 
-//Tax Rate
-let tax_rate = 0.04;
-let tax_amt = subtotal * tax_rate;
+            //create a new row and insert the info
+            let row = table.insertRow();
+            row.insertCell(0).innerHTML = `<img src="${item.image}" class="img-small" name = "img" data-tooltip="${item.description}">`;
+            row.insertCell(1).innerHTML = item.name;
+            row.insertCell(2).innerHTML = itemQuantity;
+            row.insertCell(3).innerHTML = "$" + item.price.toFixed(2);
+            row.insertCell(4).innerHTML = "$"+extendedPrice.toFixed(2);
 
+        }
 
-//Shipping Charge
-if (subtotal < 300) {
-  shipping = 5;
-  shipping_display = `$${shipping.toFixed(2)}`;
-  total = Number(tax_amt + subtotal + shipping);
-} else if (subtotal >= 300 && subtotal < 500) {
-  shipping = 10;
-  shipping_display = `$${shipping.toFixed(2)}`;
-  total = Number(tax_amt + subtotal + shipping);
-} else {
-  shipping = 0;
-  shipping_display = 'FREE';
-  total = Number(tax_amt + subtotal + shipping);
+    }
+
 }
-
-
-document.querySelector('#total_display').innerHTML += `
-    <tr style="border-top: 2px solid black;">
-        <td colspan="5" style="text-align:center;">Sub-total</td>
-        <td>$${subtotal.toFixed(2)}</td>
-    </tr>
-    <tr>
-        <td colspan="5" style="text-align:center;">Tax @ ${Number(tax_rate) * 100}%</td>
-        <td>$${tax_amt.toFixed(2)}</td>
-    </tr>
-    <tr>
-        <td colspan="5" style="text-align:center;">Shipping</td>
-        <td>${shipping_display}</td>
-    </tr>
-    <tr>
-        <td colspan="5" style="text-align:center;"><b>Total</td>
-        <td><b>$${total.toFixed(2)}</td>
-    </tr>
-`;
-
-/*
-//I tried a different method..but it didn't work
-function validateQuantity (quantity) {
-  if (isNaN(quantity)) {
-  return "Not a number";
-  }else if (quantity < 0 && !Number.isInteger(quantity)) {
-  return "Negative Inventory and not an integer";
-  }else if (quantity <0){
-  return "Negative Inventory";
-  }else if (!Number.isInteger(quantity)){
-  return "not an integer";
-  }else {
-  return "";
-  }
-  }
-  */

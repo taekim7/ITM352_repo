@@ -55,18 +55,31 @@
         </div>
       </nav>
       
+              <!--Error Message-->
+      <div class="container">
+      <div class="col text-center">
+      <div id="errorDiv"></div>
+      </div>
+      </div>
 
-    <form id="productForm" name="quantity_form" action="process_form" method="POST">
-    <div id="product-display-container" class="product-grid">
-        <!-- Product display will be inserted here dynamically -->
-    </div>
-    <input type="submit" id="purchase-button" value="Purchase"></input>
-    </form>
-</main>
-<footer>
-    <h3><span id="bottom_title"></span></h3>
-</footer>
-</body>
+        <form name="qty_form" action="process_form" method="POST">
+          <h1><span id="top_title"></span></h1>
+          <div class="container">
+              <div class="row">
+                  <!--Products will by added dynamically-->
+              </div>
+          </div>
+  
+                           <!--Purchase Button-->
+          <footer class="text-center py-4">
+              <div class="row">
+                  <div class="col">
+                      <input type="submit" value="Purchase" class="btn btn-secondary">
+                  </div>
+              </div>
+          </footer>
+      </form>
+  </body>
 
 <script defer src="./products_display.js"></script>
 </html>
