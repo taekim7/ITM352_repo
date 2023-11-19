@@ -107,7 +107,7 @@ let new_user = request.body.username;
     if (typeof user_reg_data[new_user] != 'undefined') {
         resp_msg = `${new_user} already exists`;
         errors = true;
-    } else if (request.body.password != request.body.repeat_password) {
+    } else if (request.body.password == request.body.repeat_password) {
 
     user_reg_data[new_user] = {};
     user_reg_data[new_user].password = request.body.password;
@@ -120,6 +120,9 @@ let new_user = request.body.username;
     }else {
         resp_msg = `Passwords do not match`;
         errors = true;
+    }
+    if (errors) {
+        response.send (resp_msg);
     }
 
  });
