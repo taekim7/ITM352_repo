@@ -48,7 +48,14 @@
               <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+              <li id="account" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+                <a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a>
+                <div id="accountDropdown">
+                  <p id="welcomeMessage"></p>
+                  <button id="loginBtn" onclick="redirectToLogin()">Login</button>
+                  <button id="registerBtn" onclick="redirectToRegister()">Register</button>
+                </div>
+              </li>
               <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
             </ul>
           </div>

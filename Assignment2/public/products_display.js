@@ -1,5 +1,47 @@
 //products_display.js
 
+
+function showDropdown() {
+    const dropdown = document.getElementById('accountDropdown');
+    dropdown.style.display = 'block';
+  
+    // Replace this with your logic to check if the user is logged in
+    const isLoggedIn = true; // Change this based on your actual logic
+  
+    if (isLoggedIn) {
+      // Get the username from your server-side logic
+      const username = 'exampleUser'; // Replace this with the actual username
+  
+      document.getElementById('welcomeMessage').textContent = `Welcome ${username}!`;
+      document.getElementById('loginBtn').style.display = 'none';
+      document.getElementById('registerBtn').style.display = 'none';
+    } else {
+      // If not logged in, show login and register buttons
+      document.getElementById('welcomeMessage').textContent = '';
+      document.getElementById('loginBtn').style.display = 'block';
+      document.getElementById('registerBtn').style.display = 'block';
+    }
+  }
+  
+  function hideDropdown() {
+    document.getElementById('accountDropdown').style.display = 'none';
+  }
+  
+  function redirectToLogin() {
+    // Add your logic to redirect to the login page
+    alert('Redirect to login page');
+  }
+  
+  function redirectToRegister() {
+    // Add your logic to redirect to the register page
+    alert('Redirect to register page');
+  }
+
+
+
+
+
+
 //get parameters
 let params = (new URL(document.location)).searchParams;
 let error;

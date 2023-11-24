@@ -110,3 +110,8 @@ function generateItemRows(){
     }
 
 }
+
+document.getElementById('moreShoesBtn').addEventListener('click', function () {
+    // Redirect to the products display page
+    window.location.href = '/products_display.html';
+});
