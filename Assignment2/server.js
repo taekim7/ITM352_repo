@@ -1,7 +1,5 @@
 //server.js
 
-
-const session = require('express-session');
 // Importing the Express.js framework 
 const express = require('express');
 // Create an instance of the Express application called "app"
