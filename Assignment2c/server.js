@@ -1,10 +1,27 @@
 //server.js
 
+
+//Load user_data.json
+const fs = require('fs');
+
+
+
 // Importing the Express.js framework 
 const express = require('express');
 // Create an instance of the Express application called "app"
 // app will be used to define routes, handle requests, etc
 const app = express();
+
+
+//Define user_data.json
+let filename = __dirname + '/user_data.json';
+
+// Load existing user registration data from the file
+let user_reg_data = {};
+if (fs.existsSync(filename)) {
+    user_reg_data = JSON.parse(fs.readFileSync(filename, 'utf-8'));
+}
+
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,6 +52,18 @@ app.get("/products.js", function (request, response, next) {
 
 //whenever a post with proccess form is recieved
 app.post("/process_form", function (request, response) {
+
+
+    // Check if the loggedIn parameter is present in the URL
+    const loggedInParam = request.query.loggedIn;
+
+
+    if (!loggedInParam || loggedInParam.toLowerCase() !== 'true') {
+        // If no user is logged in, redirect to the login page
+        let params = new URLSearchParams(request.body).toString();
+        return response.redirect(`/login.html?${params}`);
+    }
+
     //get the quantities
     let qtys = request.body[`quantity_textbox`];
     //console.log(qtys);
@@ -209,6 +238,7 @@ app.post("/process_login", function (request, response) {
 
 
 
+
  app.post("/process_register", function (request, response) {
     // Retrieve the request.body and perform server-side validation on the information the user provided.
 
@@ -265,6 +295,16 @@ app.post("/process_login", function (request, response) {
         }).toString();
         response.redirect(`./register.html?${params}`);
     } else {
+        // Update user_data with the new user
+        user_data[email] = {
+            password: password,
+            email: email,
+            // Add other properties as needed
+        };
+
+        // Write the updated user_data back to the file
+        fs.writeFileSync(filename, JSON.stringify(user_data, null, 2), 'utf-8');
+
         // If no input errors, redirect the user to the invoice page
         // Also, append their selected quantities back
         let params = new URLSearchParams({

@@ -1,0 +1,14 @@
+.login-container {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.submit-container {
+    margin: 20px;
+    text-align: center;
+    top: 30px;
+    bottom: 30px;
+}

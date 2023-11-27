@@ -1,0 +1,13 @@
+.register-container {
+    text-align: center;
+}
+
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px; 
+    left: 50%;
+    right: 50%;
+}
