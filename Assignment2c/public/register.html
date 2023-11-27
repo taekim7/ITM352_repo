@@ -1,0 +1,43 @@
+<!--register.html-->
+<!DOCTYPE html>
+<head>
+    <title>Cool Shoe Store</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" defer></script>
+</head>
+<header>
+       <!--Title of Store-->
+<div class="jumbotron">
+    <div class="container text-center">
+    <h1><span id="top_title">Cool Shoe Store</span></h1>
+    <p>Cool Shoes for Cool People</p>
+    <audio controls autoplay loop>
+        <source src="./music/01 - Heaven Is A Place On Earth.mp3" type="audio/mpeg">
+    </audio>
+    <main>
+    </div>
+    <body>
+        <form action = "/process_register" method = "post" name="register_form">
+            <!--
+            Input boxes to retrieve user information (email, name, password, and confirm password)
+            Note: each input box should have a name. The name of the input box is what is used
+            to retrieve its value in server.js
+            -->
+
+
+
+            <!--Submit button for users to Register-->
+            <input class = "sm-button highlight" type = "submit" value = "Register">
+
+
+
+            <!--Button to redirect to login page if user already has an account-->
+            <a href="/login.html" class = "link" style ="text-decoration: underline">Already part of the cool people? Login here </a>
+
+            </form>
+    </body>
+</div>
+</html>
