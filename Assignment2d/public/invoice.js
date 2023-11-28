@@ -1,5 +1,15 @@
 //Invoice JS
 
+
+// Access user data from temp_user
+let username = temp_user['username'];
+let name = temp_user['name'];
+
+// Use the data as needed
+console.log(`Hello,  (${username})!`);
+
+
+
 window.onload = function() {
     
 }
