@@ -161,7 +161,7 @@ app.post("/process_login", function (request, response) {
     let entered_password = POST['password'];
 
     if (entered_username.length == 0 && entered_password.length == 0) {
-        request.query.loginError = 'Username and Password cannot be empty';
+        request.query.loginError = 'username and Password cannot be empty';
     } else if (user_data[entered_username]) {
         if (user_data[entered_username].password == entered_password) {
             temp_user['username'] = entered_username;
@@ -170,7 +170,7 @@ app.post("/process_login", function (request, response) {
 
             let params = new URLSearchParams(temp_user);
 
-            response.redirect(`./invoice.html?valid=${params.toString()}`);
+            response.redirect(`./login.html?${params.toString()}`);
             return;
         } else if (entered_password == 0) {
             request.query.loginError = 'Password cannot be blank';
@@ -178,12 +178,12 @@ app.post("/process_login", function (request, response) {
             request.query.loginError = 'Incorrect Password';
         }
     } else {
-        request.query.loginError = 'Username does not exist';
+        request.query.loginError = 'username does not exist';
     }
 
     request.query.username = entered_username;
     let params = new URLSearchParams(request.query);
-
+    
     response.redirect(`./login.html?=${params.toString()}`);
 });
 
@@ -218,7 +218,7 @@ app.post("/process_register", function (request, response) {
 });
 
 
-
+/*
 //------------------------------Continue Shopping---------------------------//
 app.post ('/continue_shopping', function (request, response) {
     let params = new URLSearchParams(temp_user);
@@ -248,9 +248,36 @@ delete temp_user['name'];
 
 response.redirect('./products_display.html');
 });
+*/
 
+//------------------------------Continue Shopping---------------------------//
+app.post('/continue_shopping', function (request, response) {
+    let params = new URLSearchParams(temp_user);
+    response.redirect(`./products_display.html?${params.toString()}`);
+});
 
+//-----------------------------purchase logout-----------------------------//
+app.post('/purchase_logout', function (request, response) {
+    for (let i in products) {
+        // have to get quantity sold from the temp user
+        products[i]['total_sold'] += Number(temp_user[`qty${i}`]);
+        products[i]['qty_available'] -= Number(temp_user[`qty${i}`]);
+    }
 
+    fs.writeFile(__dirname + '/products.json', JSON.stringify(products), 'utf-8', (error) => {
+        if (error) {
+            console.log('Error updating products data');
+        } else {
+            console.log('Products data updated successfully');
+        }
+    })
+
+    // remove user info from temp user
+    delete temp_user['username'];
+    delete temp_user['name'];
+
+    response.redirect('./products_display.html');
+});
 
 
 
