@@ -60,6 +60,7 @@ function validateQuantity(quantity, availableQuantity){
 
 
 //------------------------------Assigntment 2-----------------------------//
+/*
 let user_data;
 
 const fs = require ('fs');
@@ -83,6 +84,23 @@ for (let i in products){
     products.forEach((prod, i) => {prod.qty_sold = 0});
 }
 */
+
+let user_data;
+
+const fs = require ('fs');
+const filename = __dirname + '/user_data.json';
+console.log(`Resolved file path`, filename);
+
+if (fs.existsSync(filename)){
+    let data = fs.readFileSync(filename, 'utf8');
+    user_data = JSON.parse(data);
+    console.log(user_data);
+} else {
+    console.log(`${filename} does not exist`);
+    user_data = {};
+}
+
+let temp_user={}; //temp storage for user inputs to be passed along
 
 //===========================App Post Purchase Form==========================//
 app.post("/process_purchase", function (request, response,) {
