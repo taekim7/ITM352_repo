@@ -1,9 +1,15 @@
 //Invoice JS
 
-
+/*
 // Access user data from temp_user
+let temp_user = {};
 let username = temp_user['username'];
 let name = temp_user['name'];
+*/
+// Access user data from temp_user
+let tempUserObject = Object.fromEntries(urlParams.entries());
+let username = tempUserObject['username'];
+let name = tempUserObject['name'];
 
 // Use the data as needed
 console.log(`Hello,  (${username})!`);

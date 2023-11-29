@@ -25,14 +25,46 @@ app.get("/products.js", function (request, response, next) {
 
 
 
+ //----------------------Assignment 2 Stuff-----------------------//
+ /*
+ let user_data;
+ const fs = require ('fs');
+ const filename = __dirname + '/user_data.json';
+ if (fs.existsSync(filename)) {
+   let data = fs.readFileSync(filename, 'utf8');
+   user_data = JSON.parse(data);
+   console.log(user_data);
+ } else {
+     console.log (`${filename} does not exist`);
+     user_data = {};
+ }
+*/
+const fs = require('fs').promises;
+
+let user_data;
+
+(async () => {
+    const filename = __dirname + '/user_data.json';
+    try {
+        const data = await fs.readFile(filename, 'utf8');
+        user_data = JSON.parse(data);
+        console.log(user_data);
+    } catch (error) {
+        console.log(`${filename} does not exist`);
+        user_data = {};
+    }
+})();
 
 
+
+
+//-----------------------------temp user-----------------------------//
 let temp_user = {}; //temp storage for user inputs to be passed along. Slide 10
 
 
 
 
-// Whenever a post with process form is received
+//-----------------------------Process Form -----------------------------//
 app.post("/process_form", function (request, response) {
     // Get the quantities
     let qtys = request.body[`quantity_textbox`];
@@ -41,11 +73,13 @@ app.post("/process_form", function (request, response) {
     let soldArray = [];
 
     // Loop through quantities
-    for (i in qtys) { 
+    //for (i in qtys) {
+        for (let i = 0; i < qtys.length; i++) {
         let q = Number(qtys[i]);
-
+        console.log(`Quantity for prod${i}: ${q}`);
         // Call validate quantity
-        if (validateQuantity(q) == '') {
+        //if (validateQuantity(q) == '') {
+            if (!isNaN(q) && validateQuantity(q) === '') {
             if (products[i]['qty_available'] - Number(q) < 0) {
                 valid = false;
                 url += `&prod${i}=${q}`;
@@ -59,93 +93,104 @@ app.post("/process_form", function (request, response) {
         }
 
         // If there is no quantity, set valid to false
-        if (url == `&prod0=0&prod1=0&prod2=0&prod3=0&prod4=0&prod5=0`) {
+        //if (url == `&prod0=0&prod1=0&prod2=0&prod3=0&prod4=0&prod5=0`) {
+        if (isNaN(q) || url === `&prod0=&prod1=&prod2=&prod3=&prod4=&prod5=`) {
             valid = false;
         }
     }
 
+   // Log quantities and temp_user information
+   console.log('Quantities from form:', qtys);
+   console.log('Temp_user before update:', temp_user);
+
+   // Add this line to see the final value of 'valid'
+    console.log('Is valid:', valid);
     // If not valid, redirect back
-    if (valid == false) {
+
+    //if (valid == false) {
+        if (!valid) {
         response.redirect(`products_display.html?error=true` + url);
     } else {
-        // Replace the comment below with your actual logic to check if the user is logged in
-        if (true) {
-            for (i in qtys) {
-                temp_user[`qty${i}`] = request.body[`qty${i}`];
+        // Check if the user is logged in
+        if (userIsLoggedIn(request)) {
+            // User is logged in, redirect to invoice page
+            response.redirect('/invoice.html');
+        } else {
+            // User not logged in, redirect to login page with temp_user parameters
+            for (let i in qtys) {
+                let qtyKey = `qty${i}`;
+                temp_user[qtyKey] = request.body[qtyKey];
                 products[i]['total_sold'] += soldArray[i];
                 products[i]['qty_available'] -= soldArray[i];
+                console.log(`Updated temp_user:`, temp_user);
             }
-
+    
             let params = new URLSearchParams(temp_user);
-            response.redirect(`/invoice.html?${params.toString()}`);
-        } else {
-            //user not logged in, redirect to login page
-            response.redirect('/login.html');
+            console.log(`redirecting to login with temp_user:`, temp_user);
+            response.redirect(`/login.html?${params.toString()}`);
         }
     }
 });
 
 
- //Assignment 2 Starts here
-let user_data;
-const fs = require ('fs');
-const filename = __dirname + '/user_data.json';
-if (fs.existsSync(filename)) {
-  let data = fs.readFileSync(filename, "utf8");
-  user_data = JSON.parse(data);
-  console.log(user_data);
-} else {
-    console.log (`${filename} does not exist`);
-    user_data = {};
+function userIsLoggedIn(request) {
+    // Check if 'username' and 'password' properties exist in request.body
+    if ('username' in request.body && 'password' in request.body) {
+        const entered_username = request.body['username'].toLowerCase();
+        const entered_password = request.body['password'];
+
+        return user_data[entered_username] && user_data[entered_username].password === entered_password;
+    }
+
+    return false;
 }
 
 
 
 
 
-//Process login
+
+
+
+
+//------------------------------Process login------------------------------//
 app.post("/process_login", function (request, response) {
-//Requesting the body of the request (id and pw)
-let POST = request.body;
-let entered_username = POST['username'].toLowerCase;
-let entered_password = POST['password'];
+    // Requesting the body of the request (id and pw)
+    let POST = request.body;
+    let entered_username = POST['username'].toLowerCase();
+    let entered_password = POST['password'];
 
-if (entered_username.length == 0 && entered_password.length == 0){
-    request.query.loginError = 'Username and Password cannot be empty';    
-} else if (user_data[entered_username]){
-    if (user_data[entered_username].password == entered_password){
-        temp_user['username'] = entered_username;
-        temp_user['name'] = user_date[entered_username].name;
-        console.log(temp_user);
-        
-        let params = new URLSearchParams(temp_user);
-        
+    if (entered_username.length == 0 && entered_password.length == 0) {
+        request.query.loginError = 'Username and Password cannot be empty';
+    } else if (user_data[entered_username]) {
+        if (user_data[entered_username].password == entered_password) {
+            temp_user['username'] = entered_username;
+            temp_user['name'] = user_data[entered_username].name;
+            console.log(temp_user);
 
-        response.redirect(`./invoice.html?valid=${params.toString()}`);
-        return;
-    } else if (entered_password == 0) {
-        request.query.loginError = 'Password cannot be blank';
-    } else {
-        request.query.loginError = 'Incorrect Password';
-    }
+            let params = new URLSearchParams(temp_user);
+
+            response.redirect(`./invoice.html?valid=${params.toString()}`);
+            return;
+        } else if (entered_password == 0) {
+            request.query.loginError = 'Password cannot be blank';
+        } else {
+            request.query.loginError = 'Incorrect Password';
+        }
     } else {
         request.query.loginError = 'Username does not exist';
     }
-
-
 
     request.query.username = entered_username;
     let params = new URLSearchParams(request.query);
 
     response.redirect(`./login.html?=${params.toString()}`);
-
-}
-);
+});
 
 
 
 
-//Register
+//------------------------------Process Register-----------------------------//
 app.post("/process_register", function (request, response) {
     // Retrieve user input from the request body
     let username = request.body.username;
@@ -174,13 +219,13 @@ app.post("/process_register", function (request, response) {
 
 
 
-
+//------------------------------Continue Shopping---------------------------//
 app.post ('/continue_shopping', function (request, response) {
     let params = new URLSearchParams(temp_user);
     response.redirect('./products_display.html?{params.toString()}');
 });
 
-
+//-----------------------------purchase logout-----------------------------//
 app.post ('/purchase_logout', function (request, response) {
 
     for (let i in products) {
@@ -189,7 +234,7 @@ app.post ('/purchase_logout', function (request, response) {
         products[i]['qty_available'] -= Number(temp_user[`qty${i}`]);
     }
 
-    fs.writeFile(__dirname +'products.json', JSON.stringify(products), 'utf-8', (error) => {
+    fs.writeFile(__dirname +'/products.json', JSON.stringify(products), 'utf-8', (error) => {
         if (error) {
             console.log('Error updating products data');
         } else {
@@ -203,6 +248,17 @@ delete temp_user['name'];
 
 response.redirect('./products_display.html');
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
