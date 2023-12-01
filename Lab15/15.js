@@ -98,6 +98,9 @@ app.get("/login", function (request, response) {
 <input type="password" name="password" size="40" placeholder="enter password"><br />
 <input type="submit" value="Submit" id="submit">
 </form>
+<script>    
+
+</script>
 </body>
     `;
     let username = request.cookies.username || '';
