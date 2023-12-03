@@ -6,7 +6,7 @@ window.onload = function() {
 
     //Get values previously inputted and place back into input fields
     register_form.elements['name'].value = params.get('name');
-    register_form.elements['email'].value = params.get('email');
+    register_form.elements['email'].value = params.get('email').toLowerCase();
 
     //Get error messages and display them
     for (let i = 0; i <= document.getElementsByClassName('form-group').length; i++) {
@@ -24,3 +24,6 @@ window.onload = function() {
         }
     }
 }
+
+
+

@@ -45,8 +45,12 @@ body {
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+
+
+
 .buttons-container {
-    color: black; /* Set the text color to black for the buttons */
-    text-align: center;
+    color: black;
+    display: flex;
+    justify-content: space-around;
 }
 

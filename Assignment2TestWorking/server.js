@@ -31,15 +31,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-
 //function to validate the quantity
-function validateQuantity(quantity, availableQuantity){
-    //console.log(quantity);
+function validateQuantity(quantity, availableQuantity) {
     let errors = [];
     quantity = Number(quantity);
 
     switch (true) {
-        case isNaN(quantity) || quantity == '':
+        case isNaN(quantity) || quantity === '':
             errors.push("Not a number. Please enter non-negative quantity");
             break;
         case quantity < 0 && !Number.isInteger(quantity):
@@ -48,16 +46,12 @@ function validateQuantity(quantity, availableQuantity){
         case quantity < 0:
             errors.push("Negative quantity. Please enter non-negative quantity");
             break;
-        case quantity !=0 && !Number.isInteger(quantity):
-            errors.push("Not an integer. Please enter an integer");
-            break;
         case quantity > availableQuantity:
             errors.push("Not enough items in stock");
             break;
     }
     return errors;
 }
-
 
 
 
@@ -291,11 +285,11 @@ app.post("/process_register", function (request, response) {
 
     //Validate Password
     validateConfirmPassword(reg_password, reg_confirm_password);
-
-    //Validate Email to see if it's only letters and "@" and "."
+    validatePassword(reg_password);
+    //Validate Email to see if it's only letters and "@"  "." and domain names
     validateEmail(reg_email);
     //Validate Name to see if it's only letters
-
+    validateName(reg_name);
 
 
     //Server Response to check if there are no errors
@@ -358,8 +352,17 @@ function validatePassword(password) {
 // Validate Email Function
 function validateEmail(email) {
     // Basic email validation using a regular expression
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
         registration_errors.email_error = "Invalid email format.";
+    }
+}
+
+//Validate Name
+function validateName(name) {
+    // Basic name validation using a regular expression
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    if (!nameRegex.test(name)) {
+        registration_errors.name_error = "Invalid name format.";
     }
 }
