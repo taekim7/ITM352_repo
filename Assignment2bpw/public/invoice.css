@@ -1,0 +1,56 @@
+/* invoice.css */
+
+.invoice-table-image {
+    width: 100%; /* Set the desired width */
+     /* Set the desired height */
+    border-radius: 5px; /* Optional: Apply border-radius for rounded corners */
+}
+
+
+.invoice-table-item-name {
+    font-family: 'Lato', sans-serif; /* Replace 'Your Desired Font' with the desired font name */
+    font-size: 20px; /* Adjust the font size as needed */
+    font-weight: bold;
+    color: white;
+}
+
+
+
+#invoice_container {
+    opacity: 100%;
+    padding: 20px; /* Add padding to the container if necessary */
+}
+
+.jumbotron {
+    position: relative;
+    background-image: url('./images/michael.jpg'); /* Replace 'path/to/your/background.jpg' with the actual path to your background image */
+    background-size: cover; /* Adjust the background size as needed */
+    background-repeat: no-repeat;
+    color: white; /* Set the text color to contrast with the background */
+    padding: 100px; /* Add padding to the jumbotron if necessary */
+}
+
+
+
+
+#top_title {
+    color: white; /* Set the text color to contrast with the background */
+}
+
+body {
+    color: white; /* Set the default text color for the body */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+
+
+
+.buttons-container {
+    color: black;
+    display: flex;
+    justify-content: space-around;
+}
+
