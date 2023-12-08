@@ -54,17 +54,17 @@ for (let i = 0; i < products.length; i++) {
 document.querySelector('.row').innerHTML += `
 <div class="col-md-6 product_card">
 <div>
-    <h5 style="font-size: 35px; text-align: left; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="col-md-10 product_name mb-4">${products[i].name}</h5>
-    <h5 style="font-size: 35px; text-align: left; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="col-md-10 product_price mb-4">$${(products[i].price).toFixed(2)}</h5>
+    <h5 style="font-size: 35px; text-align: left; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="col-md-10 product_name mb-4">${products[i].shoe}</h5>
+    <h5 style="font-size: 35px; text-align: left; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="col-md-10 product_price mb-4">$${(products[i].price1).toFixed(2)}</h5>
 </div>  
 
-<img src="${products[i].image}" class="img-thumbnail" alt="${products[i].alt}" data-tooltip="${products[i].description}">
+<img src="${products[i].image1}" class="img-thumbnail" alt="${products[i].alt}" >
 
 <div style="height: 90px;">
     <table style="width: 100%; text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 15px;" id="product_table">
         <tr>
             <!-- Shoes available for the product -->
-            <td style="text-align: left; width: 20%;">Shoes Available: ${products[i].qty_available}</td>
+            <td style="text-align: left; width: 20%;">Shoes Available: ${products[i].qty_available1}</td>
             
             <!-- Label for quantity -->
             <td style="text-align: right; width: 10%;">
@@ -150,3 +150,48 @@ function checkInputTextbox(textBox, availableQuantity) {
 }
 
 
+
+//Function to Add to Cart
+function addToCart(productName, productPrice) {
+    // Retrieve existing cart data from local storage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Check if the product is already in the cart
+    const existingProduct = cart.find(product => product.name === productName);
+    if (existingProduct) {
+        existingProduct.quantity++;
+    } else {
+        // Add the product to the cart
+        cart.push({
+            name: productName,
+            price: productPrice,
+            quantity: 1
+        });
+    }
+
+    // Update the local storage with the modified cart
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Update the cart button and trigger hover effect
+    updateCartButton();
+}
+
+// Function to update the cart button and trigger hover effect
+function updateCartButton() {
+    const cartButton = document.getElementById('cartButton');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Calculate the total quantity in the cart
+    const totalQuantity = cart.reduce((total, product) => total + product.quantity, 0);
+
+    // Update the cart button text
+    cartButton.textContent = `Cart (${totalQuantity})`;
+
+    // Add visual effects or update UI as needed (e.g., hover effect)
+    cartButton.classList.add('hoverEffect');
+}
+
+// Load cart data and update cart button when the page loads
+window.onload = function () {
+    updateCartButton();
+};

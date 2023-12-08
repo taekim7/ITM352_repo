@@ -1,380 +1,393 @@
-//server.js
+//=================================================server.js======================================================//
 
-// Importing the crypto module
+// Import required modules
 const crypto = require('crypto');
-// Importing the Express.js framework 
 const express = require('express');
-// Create an instance of the Express application called "app"
-// app will be used to define routes, handle requests, etc
-const app = express();
-const qs = require ('querystring');
-app.all('*', function (request, response, next) {
-    //console.log(request.method + ' to ' + request.path);
-    next();
- });
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const fs = require('fs');
+const bodyParser = require('body-parser');
 
- //grabs everything from public
+// Create an Express app
+const app = express();
+const port = 8080;
+
+// The 'bodyParser' middleware parses the request body and makes it available on the 'req.body' property
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// Enable parsing of JSON request bodies
+app.use(bodyParser.json());
+
+// Routes for Jersey products
+app.get('/jersey', (req, res) => {
+    // Handle rendering of the jersey products page
+    res.sendFile(path.join(__dirname, 'public', 'jersey.html'));
+  });
+
+  // Routes for Golf products
+app.get('/golf', (req, res) => {
+    // Handle rendering of the golf products page
+    res.sendFile(path.join(__dirname, 'public', 'golf.html'));
+  });
+
+  
+
+// Initialize an empty array to store cart data
+// This variable will be used to keep track of the items in the user's shopping cart
+let cart = [];
+
+// Serve static files from the 'public' directory
 app.use(express.static(__dirname + '/public'));
 
-// Start the server; listen on port 8080 for incoming HTTP requests
-app.listen(8080, () => console.log(`listening on port 8080`));
+// Parse URL-encoded request bodies
+app.use(express.urlencoded({ extended: true }));
 
-//sets up the product array from the json file
+// Parse cookies
+app.use(cookieParser());
+
+// Enable session handling
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+}));
+
+// Load products data from 'products.json' file
 let products = require(__dirname + '/products.json');
 
+// Declare a variable to store user data
+let user_data;
 
-// Define a route for handling a GET request to a path that matches "./products.js"
+// Define the path to the user data file
+const filename = __dirname + '/user_data.json';
+
+// Check if the user data file exists
+if (fs.existsSync(filename)) {
+    // Read the user data from the file
+    let data = fs.readFileSync(filename, 'utf8');
+    user_data = JSON.parse(data);
+    console.log(user_data);
+} else {
+    console.log(`${filename} does not exist`);
+    user_data = {};
+}
+
+// Middleware to handle all requests
+app.all('*', function (request, response, next) {
+    next();
+});
+
+// Start the server
+app.listen(port, () => console.log(`listening on port ${port}`));
+
+// Serve the 'products.js' file
 app.get("/products.js", function (request, response, next) {
     response.type('.js');
     let products_str = `var products = ${JSON.stringify(products)};`;
     response.send(products_str);
 });
-app.use(express.urlencoded({ extended: true }));
+
+// Handle the 'process_purchase' POST request
+app.post("/process_purchase", function (request, response) {
+    const { productType, productName, price, quantity } = request.body;
+    let POST = request.body;
+    console.log("Received from data:", POST);
+
+    let has_qty = false;
+    let errorObject = {};
 
 
+    if (productType === 'jersey') {
+        addToCart(cart, 'jersey', productName, price, quantity);
+      } else if (productType === 'golf') {
+        addToCart(cart, 'golf', productName, price, quantity);
+      } else if (productType === 'shoe') {
+        addToCart(cart, 'shoe', productName, price, quantity);
+        
+      }
 
-//function to validate the quantity
-function validateQuantity(quantity, availableQuantity) {
-    let errors = [];
-    quantity = Number(quantity);
 
-    switch (true) {
-        case isNaN(quantity) || quantity === '':
-            errors.push("Not a number. Please enter non-negative quantity");
-            break;
-        case quantity < 0 && !Number.isInteger(quantity):
-            errors.push("Not an integer. Please enter non-negative quantity");
-            break;
-        case quantity < 0:
-            errors.push("Negative quantity. Please enter non-negative quantity");
-            break;
-        case quantity > availableQuantity:
-            errors.push("Not enough items in stock");
-            break;
+    // Function to add items to the cart
+    function addToCart(cart, productType, productName, price, quantity) {
+    // Check if the product is already in the cart
+    const existingProduct = cart.find(product => product.name === productName && product.type === productType);
+  
+    if (existingProduct) {
+      existingProduct.quantity += quantity;
+    } else {
+      // Add the product to the cart
+      cart.push({
+        type: productType,
+        name: productName,
+        price: price,
+        quantity: quantity
+      });
     }
-    return errors;
-}
+  }
 
-
-
-
-
-
-
-//------------------------------Assigntment 2-----------------------------//
-// Declare a variable to store user data
-let user_data;
-
-// Import the 'fs' module for file system operations
-const fs = require('fs');
-
-// Define the file path of the JSON file containing user data
-const filename= __dirname + '/user_data.json';
-
-// Check if the file exists
-if (fs.existsSync(filename)){
-    // If the file exists, read its contents
-    let data = fs.readFileSync(filename, 'utf8');
-    // Parse the JSON data into a JavaScript object
-    user_data = JSON.parse(data);
-    // Log the user data to the console
-    console.log(user_data);
-} else {
-    // If the file does not exist, log an error message
-    console.log(`${filename} does not exist`);
-    // Initialize the user_data variable as an empty object
-    user_data = {};
-}
-
-// Declare a temporary variable to store user inputs
-let temp_user = {}; // temp storage for user inputs to be passed along
-
-/*
-for (let i in products){
-    products.forEach((prod, i) => {prod.qty_sold = 0});
-}
-*/                         
-
-
-//===========================App Post Purchase Form==========================//
-app.post("/process_purchase", function (request, response,) {
-//extract content of request's body
-let POST = request.body;
-console.log("Received from data:", POST);
-//assuming input box are empty
-let has_qty = false;
-//creating object to store error message for each input
-let errorObject = {};
-
-//iterating through each input
-for (let i in products) {
-    let qty = POST[`qty${[i]}`];
-    has_qty = has_qty || (qty > 0);
-
-    let errorMessage = validateQuantity(qty, products[i].qty_available);
-
-    //store error messages
-    if (errorMessage.length > 0) {
-        errorObject[`qty${[i]}_error`] = errorMessage.join(', ');
-    }
-}
-//if all input boxes are empty with no error
-if (has_qty == false && Object.keys(errorObject).length == 0) {
-    //redirect to products_display with error in url
-    response.redirect("./products_display.html?error");
-
-} else if (has_qty == true && Object.keys(errorObject).length == 0) {
-    //update quantities and redirect to invoice
+    // Validate the quantity for each product
     for (let i in products) {
-        temp_user [`qty${[i]}`]= POST [`qty${[i]}`];
+        let qty = POST[`qty${[i]}`];
+        has_qty = has_qty || (qty > 0);
 
-        console.log(temp_user);
+        let errorMessage = validateQuantity(qty, products[i].qty_available);
 
-        /*
-        //update quantity sold and available
-        products[i].qty_sold += Number(qty);
-        products[i].qty_available = products[i].qty_available - qty;
-        */
-
+        if (errorMessage.length > 0) {
+            errorObject[`qty${[i]}_error`] = errorMessage.join(', ');
+        }
     }
-    //redirect to invoice page
-    let params = new URLSearchParams(temp_user);
-    console.log(params);
-    response.redirect(`./login.html?${params.toString()}`);
-}
-//If there is an error
-else if (Object.keys(errorObject).length > 0) {
-    response.redirect("./products_display.html?" + qs.stringify(POST) + `&inputError`);
-}
 
-else {
-    if (has_qty == false) {
-        response.redirect("./products_display.html?" + qs.stringify(POST) + `&error`);
+    // Redirect based on the validation results
+    if (has_qty == false && Object.keys(errorObject).length == 0) {
+        response.redirect("./products_display.html?error");
+    } else if (has_qty == true && Object.keys(errorObject).length == 0) {
+        // Store the quantities in the session and redirect to the login page
+        for (let i in products) {
+            request.session[`qty${[i]}`] = POST[`qty${[i]}`];
+        }
+
+        response.redirect(`./login.html`);
+    } else if (Object.keys(errorObject).length > 0) {
+        response.redirect("./products_display.html?" + qs.stringify(POST) + `&inputError`);
+    } else {
+        if (has_qty == false) {
+            response.redirect("./products_display.html?" + qs.stringify(POST) + `&error`);
+        }
     }
-}
 });
-    
 
 
 
 
-
-
-
-
-//===========================App Post Login Form==========================//
-// This code block handles a POST request to the '/process_login' endpoint of the app.
 app.post('/process_login', (request, response) => {
-    // Retrieve the data from the request body
+    // Extract the email and password from the request body
     let POST = request.body;
     let entered_email = POST['email'].toLowerCase();
     let entered_password = POST['password'];
 
-    // Check if the entered email and password are empty
+    // Check if both email and password are empty
     if (entered_email.length == 0 && entered_password.length == 0) {
-        // Set an error message indicating that the email and password should be entered
-        response.query.loginError = 'Please enter email and password';
+        // Set an error message in the session
+        request.session.loginError = 'Please enter email and password';
+
+        // Redirect to the login page with the query parameters from the request
         response.redirect(`./login.html?${qs.stringify(request.query)}`);
         return;
     }
 
-    // If the entered email exists in the user_data object
+    // Check if the entered email exists in the user_data object
     if (user_data[entered_email]) {
-        // Extract the stored password and salt from the stored password string
+        // Extract the stored salt and hash from the user_data object
         const [storedSalt, storedHash] = user_data[entered_email].password.split(':');
 
-        // Use the entered password and stored salt to create a hash using SHA-256 algorithm
+        // Generate the hash of the entered password using the stored salt
         const enteredHash = crypto.pbkdf2Sync(entered_password, storedSalt, 10000, 512, 'sha256').toString('hex');
 
         // Check if the entered hash matches the stored hash
         if (enteredHash === storedHash) {
-            // If the password is correct, create a temporary user object with the entered email and name
-            temp_user['email'] = entered_email;
-            temp_user['name'] = user_data[entered_email].name;
+            // Set the email and name in the session
+            request.session.email = entered_email;
+            request.session.name = user_data[entered_email].name;
 
-            // Log the temporary user object
-            console.log(temp_user);
-
-            // Redirect the user to the invoice page with a query parameter indicating success and the temporary user information
-            let params = new URLSearchParams(temp_user);
-            response.redirect(`./invoice.html?valid&${params.toString()}`);
+            // Redirect to the invoice page with a "valid" query parameter
+            response.redirect(`./invoice.html?valid`);
             return;
         } else {
-            // If the entered password is incorrect
-            request.query.loginError = 'Incorrect password';
+            // Set an error message in the session
+            request.session.loginError = 'Incorrect password';
         }
     } else {
-        // If the entered email does not exist in the user_data object
-        request.query.loginError = 'Incorrect email';
+        // Set an error message in the session
+        request.session.loginError = 'Incorrect email';
     }
 
-    // Set the entered email as a query parameter in the request
-    request.query.email = entered_email;
-    // Create a URLSearchParams object with the request query parameters
+    // Set the entered email in the session
+    request.session.email = entered_email;
+
+    // Create a new URLSearchParams object with the query parameters
     let params = new URLSearchParams(request.query);
-    // Redirect the user back to the login page with the query parameters indicating the login error and the entered email
+
+    // Redirect to the login page with the query parameters
     response.redirect(`./login.html?${params.toString()}`);
+});
+
+app.post("/continue_shopping", function (request, response) {
+    // Redirect to the products display page
+    response.redirect(`/products_display.html`);
+});
+
+app.post("/purchase_logout", function (request, response) {
+    // Update the quantity sold and available for each product
+    for (let i in products) {
+        products[i].qty_sold += Number(request.session[`qty${[i]}`]);
+        products[i].qty_available = products[i].qty_available - Number(request.session[`qty${[i]}`]);
+    }
+
+    // Write the updated products object to the products.json file
+    fs.writeFile(__dirname + '/products.json', JSON.stringify(products), 'utf-8', (error) => {
+        if (error) {
+            console.log('error updating products', error);
+        } else {
+            console.log('File written successfully. Products are updated.');
+        }
+    });
+
+    // Remove the email and name from the session
+    delete request.session.email;
+    delete request.session.name;
+
+    // Redirect to the products display page
+    response.redirect('./products_display.html');
 });
 
 
 
 
-
-
-
-//===========================App Post Continue Shoppin==========================//
-// This code block handles a POST request to the '/continue_shopping' endpoint of the app.
-
-app.post("/continue_shopping", function (request, response) {
-    // Create a new URLSearchParams object with the 'temp_user' parameter.
-    let params = new URLSearchParams(temp_user);
-
-    // Redirect the response to the '/products_display.html' endpoint with the query parameters from the 'params' object.
-    response.redirect(`/products_display.html?${params.toString()}`);
-})
-
-
-
-
-
-
-//===========================App Post Purchase Logout==========================//
-app.post("/purchase_logout", function (request, response) {
-    // Loop through each product in the products array
-    for (let i in products) {
-        // Increment the quantity sold of the current product by the number specified in the temp_user object
-        products[i].qty_sold += Number(temp_user[`qty${[i]}`]);
-        // Decrease the available quantity of the current product by the number specified in the temp_user object
-        products[i].qty_available = products[i].qty_available - Number(temp_user[`qty${[i]}`]);
-    }
-
-    // Write the updated products array to the products.json file
-    fs.writeFile(__dirname + '/products.json', JSON.stringify(products), 'utf-8', (error) => {
-        if (error) {
-            // If there's an error while writing the file, log the error message
-            console.log('error updating products', error);
-        } else {
-            // If the file is written successfully, log a success message
-            console.log('File written successfully. Products are updated.');
-        }
-    });
-
-    // Remove the 'email' and 'name' properties from the temp_user object
-    delete temp_user['email'];
-    delete temp_user['name'];
-
-    // Redirect the user to the products_display.html page
-    response.redirect('./products_display.html');
-})
-
-
-
-
-
-
-
-//==============================App Post Register Form==========================//
-//Declare registration errors
-let registration_errors = {};
-
+// Define an endpoint for the "/process_register" route with a POST method
 app.post("/process_register", function (request, response) {
-    //Get user's input from form
+    // Extract the values from the request body
     let reg_name = request.body.name;
     let reg_email = request.body.email.toLowerCase();
     let reg_password = request.body.password;
     let reg_confirm_password = request.body.confirm_password;
 
-    //Validate Password
+    // Validate the confirm password field
     validateConfirmPassword(reg_password, reg_confirm_password);
+
+    // Validate the password field
     validatePassword(reg_password);
-    //Validate Email to see if it's only letters and "@"  "." and domain names
+
+    // Validate the email field
     validateEmail(reg_email);
-    //Validate Name to see if it's only letters
+
+    // Validate the name field
     validateName(reg_name);
 
-
-    //Server Response to check if there are no errors
+    // Check if there are no registration errors
     if (Object.keys(registration_errors).length == 0) {
+        // Encrypt the password
         const encryptedPassword = encryptPassword(reg_password);
+
+        // Create a new user in the user_data object
         user_data[reg_email] = {};
         user_data[reg_email].name = reg_name;
         user_data[reg_email].password = encryptedPassword;
-        
-        //Write the updated user_data object to the user_data.json file
+
+        // Write the user_data object to a JSON file
         fs.writeFile(__dirname + '/user_data.json', JSON.stringify(user_data), 'utf-8', (error) => {
+            // Check if there was an error while writing the file
             if (error) {
-                //If there's an error while writing the file, log the error message
                 console.log('error updating user_data', error);
             } else {
-                //If the file is written successfully, log a success message
                 console.log('File written successfully. User data is updated.');
 
-            //Add user's info to temp_user
-            temp_user['name'] = reg_name;
-            temp_user['email'] = reg_email;
+                // Set the email and name in the session
+                request.session.email = reg_email;
+                request.session.name = reg_name;
 
-            //console log temp_user
-            console.log(temp_user);
-            console.log(user_data);
-
-            let params = new URLSearchParams(temp_user);
-            response.redirect(`/invoice.html?regSuccess&valid&${params.toString()}`);
+                // Redirect the user to the invoice.html page with query parameters
+                response.redirect(`/invoice.html?regSuccess&valid`);
             }
         });
-            
-        
-    }else { //If there are errors
+    } else {
+        // Remove the password and confirm_password fields from the request body
         delete request.body.password;
         delete request.body.confirm_password;
 
-        let params = new URLSearchParams(request.body);
-        response.redirect(`/register.html?${params.toString()}&${qs.stringify(registration_errors)}`);
+        // Redirect the user to the register.html page with query parameters
+        response.redirect(`/register.html?${qs.stringify(request.body)}&${qs.stringify(registration_errors)}`);
     }
 });
-function validateConfirmPassword(password, confirm_password) {
-    delete registration_errors['confirm_password_type'];
-    console.log(registration_errors);
 
+// Function to validate if the confirm password matches the password
+function validateConfirmPassword(password, confirm_password) {
+    // Remove any previous error for confirm password
+    delete registration_errors['confirm_password_type'];
+
+    // Compare the confirm password with the password
     if (confirm_password !== password) {
-        registration_errors ['confirm_password_type'] = 'Passwords do not match';
+        // If they don't match, set an error message in the registration_errors object
+        registration_errors['confirm_password_type'] = 'Passwords do not match';
     }
 }
 
-// Encrypt Password Function
+// Function to encrypt the password
 function encryptPassword(password) {
-    // Generate a random salt for each user
+    // Generate a random salt
     const salt = crypto.randomBytes(16).toString('hex');
-    // Use the password and salt to create a hash using SHA-256 algorithm
+
+    // Use pbkdf2Sync to hash the password with the salt
     const hash = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha256').toString('hex');
-    // Store both the salt and hash in the database
+
+    // Return the salt and hash concatenated with a colon
     return `${salt}:${hash}`;
 }
 
-// Validate Password Function
+// Function to validate the password
 function validatePassword(password) {
+    // Check if the password length is between 10 and 16 characters
     if (password.length < 10 || password.length > 16) {
+        // If not, set an error message in the registration_errors object
         registration_errors.password_error = "Password must be between 10 and 16 characters.";
     } else if (/\s/.test(password)) {
+        // Check if the password contains any spaces
+        // If it does, set an error message in the registration_errors object
         registration_errors.password_error = "Password cannot contain spaces.";
     }
-    // Add more password validation rules as needed
 }
 
-
-// Validate Email Function
+// Function to validate the email
 function validateEmail(email) {
-    // Basic email validation using a regular expression
+    // Define a regular expression for email validation
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Check if the email matches the regular expression
     if (!emailRegex.test(email)) {
+        // If not, set an error message in the registration_errors object
         registration_errors.email_error = "Invalid email format.";
     }
 }
 
-//Validate Name
+// Function to validate the name
 function validateName(name) {
-    // Basic name validation using a regular expression
+    // Define a regular expression for name validation
     const nameRegex = /^[a-zA-Z\s]+$/;
+
+    // Check if the name matches the regular expression
     if (!nameRegex.test(name)) {
+        // If not, set an error message in the registration_errors object
         registration_errors.name_error = "Invalid name format.";
     }
+}
+
+// This function validates the quantity input by the user against the available quantity in stock.
+// If there are any validation errors, they will be stored in an array and returned at the end.
+
+function validateQuantity(quantity, availableQuantity) {
+    let errors = []; // Initialize an empty array to store validation errors
+
+    quantity = Number(quantity); // Convert the quantity input to a number
+
+    // Use a switch statement to check for different validation conditions
+    switch (true) {
+        case isNaN(quantity) || quantity === '':
+            // If the quantity is not a number or is an empty string, add an error message to the array
+            errors.push("Not a number. Please enter non-negative quantity");
+            break;
+        case quantity < 0 && !Number.isInteger(quantity):
+            // If the quantity is a negative number and not an integer, add an error message to the array
+            errors.push("Not an integer. Please enter non-negative quantity");
+            break;
+        case quantity < 0:
+            // If the quantity is a negative number, add an error message to the array
+            errors.push("Negative quantity. Please enter non-negative quantity");
+            break;
+        case quantity > availableQuantity:
+            // If the quantity is greater than the available quantity, add an error message to the array
+            errors.push("Not enough items in stock");
+            break;
+    }
+
+    return errors; // Return the array of validation errors
 }
