@@ -56,15 +56,11 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
               <li class="active"><a href="homepage.html">Home</a></li>
-              <li><a href="./products_display.html"><span class="glyphicon glyphicon-shopping-shoes"></span> Shoes</a></li>
-              <li><a href="./jersey.html"><span class="glyphicon glyphicon-shopping-Jerseys"></span> Jerseys</a></li>
-              <li><a href="./golf.html"><span class="glyphicon glyphicon-shopping-Golf"></span> Golf</a></li>
+              <li><a href="#">Products</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="./login.html"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a>
-              <button id="cartButton" class="sm-button">Cart (0)</button>
-              </li>
+              <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
             </ul>
           </div>
         </div>
@@ -78,9 +74,12 @@
 
                 <!--Awesome Audio-->
                 <div class="audio-container">
+                  <div class="song-info">
+                    <p id="artist">Bonnie Tyler</p>
+                    <p id="title">Holding Out For a Hero</p>
                   </div>
                   <audio controls autoplay loop>
-                    <source src="./music/Usher_-_Yeah_ft._Ludacris__Lil_Jon.mp3" type="audio/mpeg">
+                      <source src="./music/07. Bonnie Tyler - Holding Out For a Hero.mp3" type="audio/mpeg">
                   </audio>
                   
 
@@ -89,7 +88,7 @@
                 <!-- Product Display Grid-->
                 <form action="/process_purchase" method="POST" name="qty_form" class="qty_form">
                     <div class="row"></div>
-                    <input type="submit" value="Add to Cart" class="sm-button highlight">
+                    <input type="submit" value="Purchase" class="sm-button highlight">
       </form>
     </div>
   </body>

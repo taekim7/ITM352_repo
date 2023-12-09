@@ -1,143 +1,145 @@
-[
+{
+
+  
+    "Shoes": [
   {
-    "shoe": "Jordan 1 OG BRED",
-    "price1": 400,
-    "image1": "/images/bred1.webp",
-    "quantityAvailable1": 500,
-    "description1": "Back in 1984, after debuting his iconic Air Jordan 1 shoe, His Airness was fined by the league $5K every time he wore the black and red kicks. Why? Because their colors broke the league's uniform rules.",
-    "quantitySold1": 0
+    "name": "Jordan 1 OG BRED",
+    "price": 400,
+    "image": "/images/bred1.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
   },
   {
-    "shoe": "Jordan 4 White Cement",
+    "name": "Jordan 4 White Cement",
     "price1": 350,
     "image1": "/images/cement4.jpg",
     "quantityAvailable1": 500,
-    "description1": "The Air Jordan IV was MJ's first signature model to take flight. Complete with never before seen Wings acting as lace locks and an unforgettable color scheme, the silhouette now returns in its truest form. Nodding to its 1989 debut, the new Air Jordan IV features iconic Nike Air branding on both the heel and outsole.",
     "quantitySold1": 0
   },
   {
-    "shoe": "Jordan 5 UNC Light Blue",
+    "name": "Jordan 5 UNC Light Blue",
     "price1": 300,
     "image1": "/images/unc5.jpg",
     "quantityAvailable1": 500,
-    "description1": "The Air Jordan 5 UNC sneakers now arrive in a University Blue, black, and white colour scheme - in honour of the University of North Carolina. This pair is crafted from leather and features silver 3M reflective tongues and a collegiate patch on the heels.",
     "quantitySold1": 0
   },
   {
-    "shoe": "Jordan 6 Infrared Black/Red",
+    "name": "Jordan 6 Infrared Black/Red",
     "price1": 240,
     "image1": "/images/infrared6.webp",
     "quantityAvailable1": 500,
-    "description1": "Jordan wore thename Black/Infrared colorway of the VI for the postseason in 1991. The black colorway symbolized Jordan being locked into playoff mode. The 1991 Playoffs kicked off the Bulls Dynasty. The team would go on to win five more championships in 1990s.",
     "quantitySold1": 0
   },
   {
-    "shoe": "Jordan 11 Concord",
+    "name": "Jordan 11 Concord",
     "price1": 280,
     "image1": "/images/concord11.webp",
     "quantityAvailable1": 500,
-    "description1": "In 1995, Michael Jordan stepped onto the hardwood for playoff competition in the now iconic Air Jordan XI. The never-before-seen silhouette shined bright with patent leather atop a translucent sole, and featured MJ's number 45 at the heel.",
     "quantitySold1": 0
   },
   {
-    "shoe": "Jordan 12 Flu Game",
+    "name": "Jordan 12 Flu Game",
     "price1": 320,
     "image1": "/images/flugame12.jpg",
     "quantityAvailable1": 500,
-    "description1": "As the story goes, MJ laced up this black and red Air Jordan 12 colorway during Game 5 of the 1997 NBA Finals between the Chicago Bulls and the Utah Jazz, where he scored a game-high 38 points despite battling flu-like symptoms.",
     "quantitySold1": 0
-  },
-
-
-
-
-  {
-    "jersey": "Bulls 84 Jersey Red",
-    "price2": 400,
-    "image2": "/images/84-85 Jersey.webp",
-    "quantityAvailable2": 500,
-    "quantitySold2": 0
-  },
-  {
-    "jersey": "Bulls 95 Jersey White",
-    "price2": 400,
-    "image2": "/images/95-96 Jersey.webp",
-    "quantityAvailable2": 500,
-    "quantitySold2": 0
-  },
-  {
-    "jersey": "Bulls 95 Stripe Black",
-    "price2": 400,
-    "image2": "/images/95 stripe jersey.webp",
-    "quantityAvailable2": 500,
-    "quantitySold2": 0
-  },
-  {
-    "jersey": "Bulls All-Star Jersey",
-    "price2": 400,
-    "image2": "/images/all-star jersey.webp",
-    "quantityAvailable2": 500,
-    "quantitySold2": 0
-  },
-  {
-    "jersey": "Bulls Number 45 White",
-    "price2": 500,
-    "image2": "/images/45jersey.jpg",
-    "quantityAvailable2": 500,
-    "quantitySold2": 0
-  },
-  {
-    "jersey": "Bulls Number 45 Signed",
-    "price2": 50000,
-    "image2": "/images/45signed.jpg",
-    "quantityAvailable2": 500,
-    "quantitySold2": 0
-  },
-
-
-
-  {
-    "golf": "Jordan 1 Pine Green Low",
-    "price3": 300,
-    "image3": "/images/greengolf.jpg",
-    "quantityAvailable3": 500,
-    "quantitySold3": 0
-  },
-  {
-    "golf": "Jordan 1 Panda Golf High",
-    "price3": 300,
-    "image3": "/images/jordan1golf.jpg",
-    "quantityAvailable3": 500,
-    "quantitySold3": 0
-  },
-  {
-    "golf": "Jordan 4 White Cement",
-    "price3": 400,
-    "image3": "/images/jordan4golf.jpg",
-    "quantityAvailable3": 500,
-    "quantitySold3": 0
-  },
-  {
-    "golf": "Jordan 6 Infrared White Low",
-    "price3": 300,
-    "image3": "/images/jordan6golf.jpg",
-    "quantityAvailable3": 500,
-    "quantitySold3": 0
-  },
-  {
-    "golf": "Jordan 11 Cool Grey Low",
-    "price3": 300,
-    "image3": "/images/jordan11golf.jpg",
-    "quantityAvailable3": 500,
-    "quantitySold3": 0
-  },
-  {
-    "golf": "Jordan 12 French Blue",
-    "price3": 300,
-    "image3": "/images/jordan12golf.jpg",
-    "quantityAvailable3": 500,
-    "quantitySold3": 0
   }
+],
 
 
+
+
+  "Jerseys": [
+  {
+    "name": "Bulls 84 Jersey Red",
+    "price": 400,
+    "image": "/images/84-85 Jersey.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Bulls 95 Jersey White",
+    "price": 400,
+    "image": "/images/95-96 Jersey.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Bulls 95 Stripe Black",
+    "price": 400,
+    "image": "/images/95 stripe jersey.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Bulls All-Star Jersey",
+    "price": 400,
+    "image": "/images/all-star jersey.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Bulls Number 45 White",
+    "price": 500,
+    "image": "/images/45jersey.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Bulls Number 45 Signed",
+    "price": 50000,
+    "image": "/images/45signed.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  }
+  ],
+
+
+
+
+
+  "Golf": [
+  {
+    "name": "Jordan 1 Pine Green Low",
+    "price": 300,
+    "image": "/images/greengolf.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Jordan 1 Panda Golf High",
+    "price": 300,
+    "image": "/images/jordan1golf.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Jordan 4 White Cement",
+    "price": 400,
+    "image": "/images/jordan4golf.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Jordan 6 Infrared White Low",
+    "price": 300,
+    "image": "/images/jordan6golf.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Jordan 11 Cool Grey Low",
+    "price": 300,
+    "image": "/images/jordan11golf.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  },
+  {
+    "name": "Jordan 12 French Blue",
+    "price": 300,
+    "image": "/images/jordan12golf.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
+  }
 ]
+}
