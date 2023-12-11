@@ -4,31 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <!--Load products info-->
+    <script src = "./products.js"></script>
+
+    <!--Load Navbar Links from Sal-->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" defer></script>
+
+
+    <script type = "text/javascript" src = "/function.js"></script>
+    <script type = "text/javascript" src = "/navbar.js"></script>
+
+
     <link rel="stylesheet" type="text/css" href="./homepage.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>                        
-            </button>
-          </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account </a></li>
-              
-            </ul>
-          </div>
-        </div>
-      </nav>
+        <!--Stick Navbar from Sal-->
+  <div id="sticky_navbar">
+    <div id="top-nav" class="py-3">
+      <a class = "nav-link mx-3 highlight" href="/cart.html">
+        <span class="fa-solid fa-cart-shopping highlight" style="color: black"></span>
+        <span id="cart_total"></span>
+        Cart
+      </a>
+    <!-- Navigation Bar from Sal-->
+    <div id="nav_containter"></div>
+    </div>
+
+    <!--Expanding NAVBAR from Sal-->
+    <nav class="navbar navbar-expand-md">
+      <!--Button to toggle nav bar-->
+      <button class="navbar-toggler" id="toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa-solid fa-bars highlight"></span>
+      </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav">
+              <li><a class="nav-link mx-3 highlight" href = "homepage.html">Home</a></li>
+              <script>nav_bar(products_key, products)</script>
+            </div>
+            </div>
+            </nav>
+  </div>
+    
+    
     <a href="products_display.html">
         <h1>Cool Shoe Store</h1>
         <h2>Wear History. It's cool.</h2>
         <img src="./images/jordandunk.gif" alt="Homepage" style="height: 75%; width: 150%;">
         <h3>Click HERE to see what we got!</h3>
     </a>
+
+    <script src="/cart.js"></script>
 </body>
 </html>

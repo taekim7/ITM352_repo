@@ -11,38 +11,38 @@
   },
   {
     "name": "Jordan 4 White Cement",
-    "price1": 350,
-    "image1": "/images/cement4.jpg",
-    "quantityAvailable1": 500,
-    "quantitySold1": 0
+    "price": 350,
+    "image": "/images/cement4.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
   },
   {
     "name": "Jordan 5 UNC Light Blue",
-    "price1": 300,
-    "image1": "/images/unc5.jpg",
-    "quantityAvailable1": 500,
-    "quantitySold1": 0
+    "price": 300,
+    "image": "/images/unc5.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
   },
   {
     "name": "Jordan 6 Infrared Black/Red",
-    "price1": 240,
-    "image1": "/images/infrared6.webp",
-    "quantityAvailable1": 500,
-    "quantitySold1": 0
+    "price": 240,
+    "image": "/images/infrared6.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
   },
   {
     "name": "Jordan 11 Concord",
-    "price1": 280,
-    "image1": "/images/concord11.webp",
-    "quantityAvailable1": 500,
-    "quantitySold1": 0
+    "price": 280,
+    "image": "/images/concord11.webp",
+    "quantityAvailable": 500,
+    "quantitySold": 0
   },
   {
     "name": "Jordan 12 Flu Game",
-    "price1": 320,
-    "image1": "/images/flugame12.jpg",
-    "quantityAvailable1": 500,
-    "quantitySold1": 0
+    "price": 320,
+    "image": "/images/flugame12.jpg",
+    "quantityAvailable": 500,
+    "quantitySold": 0
   }
 ],
 
